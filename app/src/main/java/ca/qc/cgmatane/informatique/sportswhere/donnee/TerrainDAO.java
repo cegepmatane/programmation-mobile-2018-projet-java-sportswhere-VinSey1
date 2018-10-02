@@ -28,15 +28,15 @@ public class TerrainDAO {
 
         listeTerrains = new ArrayList<Terrain>();
 
-        LatLng position = new LatLng( 48.8526, -67.518);
+        LatLng position = new LatLng( 48.840897, -67.50821);
         String titre = "Terrain de la Polyvalente de Matane";
         String description = "1 terrain en vrai gazon";
         Terrain terrain = new Terrain(position, titre, description, 1);
         listeTerrains.add(terrain);
 
-        position = new LatLng(48.840856, -67.495824);
+        position = new LatLng(48.840691 ,   -67.497435);
         titre = "Terrain du CEGEP de Matane";
-        description = "2 terrains en vrai gazon\"+\"\\n\"+\"1 terrain synthétique";
+        description = "2 terrains en vrai gazon\n1 terrain synthétique";
         terrain = new Terrain(position, titre, description, 2);
         listeTerrains.add(terrain);
 
