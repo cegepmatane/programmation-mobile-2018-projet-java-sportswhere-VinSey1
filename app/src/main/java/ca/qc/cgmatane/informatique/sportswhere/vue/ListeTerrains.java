@@ -1,7 +1,10 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -14,9 +17,12 @@ import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
 public class ListeTerrains extends AppCompatActivity {
 
+    static final public int ACTIVITE_LISTE_EVENEMENTS = 2;
+
     protected TerrainDAO accesseurTerrain;
     protected List<HashMap<String, String>> listeTerrainsPourAdapteur;
     protected ListView vueListeTerrains;
+    private Intent intentionNaviguerListeEvenements;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,18 @@ public class ListeTerrains extends AppCompatActivity {
         vueListeTerrains = (ListView) findViewById(R.id.vue_liste_terrains);
 
         afficherTousLesTerrains();
+
+        intentionNaviguerListeEvenements = new Intent(this, ListeEvenements.class);
+
+        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_evenements);
+
+        actionNaviguerListeEvenements.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        startActivityForResult(intentionNaviguerListeEvenements, ACTIVITE_LISTE_EVENEMENTS);
+                    }
+                }
+        );
     }
 
     private void afficherTousLesTerrains(){
