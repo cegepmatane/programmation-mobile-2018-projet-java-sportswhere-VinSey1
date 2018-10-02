@@ -77,4 +77,14 @@ public class DetailsTerrain extends AppCompatActivity {
 
         vueListeEvenements.setAdapter(adapteur);
     }
+
+    protected void onActivityResult(int activite, int resultat, Intent donnees)
+    {
+        switch(activite)
+        {
+            case ACTIVITE_AJOUTER_EVENEMENT:
+                afficherTousLesEvenements();
+                break;
+        }
+    }
 }

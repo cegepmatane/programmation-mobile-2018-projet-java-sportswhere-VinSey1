@@ -96,4 +96,8 @@ public class EvenementDAO {
         }
         return listeEvenementsPourAdaptateur;
     }
+
+    public void ajouterEvenement(Evenement evenement) {
+        listeEvenements.add(evenement);
+    }
 }
