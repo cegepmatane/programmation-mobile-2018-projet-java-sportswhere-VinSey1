@@ -21,10 +21,10 @@ public class TerrainDAO {
     }
 
     public TerrainDAO(){
-        initialiserDonneesTest();
+        initialiserDonneesTestTerrains();
     }
 
-    private void initialiserDonneesTest(){
+    private void initialiserDonneesTestTerrains(){
 
         listeTerrains = new ArrayList<Terrain>();
 
