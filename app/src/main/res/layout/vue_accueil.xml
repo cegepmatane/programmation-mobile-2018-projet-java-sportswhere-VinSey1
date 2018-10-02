@@ -12,7 +12,7 @@
         tools:context=".MainActivity">
 
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/carte_terrains"
             android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -20,7 +20,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/action_naviguer_liste_evenements"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/action_naviguer_liste_terrains"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/action_chercher_terrain"
         android:layout_width="113dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
