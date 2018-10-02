@@ -88,4 +88,12 @@ public class EvenementDAO {
         }
         return listeEvenementsPourAdaptateur;
     }
+
+    public List<HashMap<String,String>> recupererListeEvenementsPourAdapteur(int id_terrain) {
+        List<HashMap<String, String>> listeEvenementsPourAdaptateur = new ArrayList<HashMap<String, String>>();
+        for(Evenement evenement : listeEvenements){
+            if(evenement.getTerrain() == id_terrain) listeEvenementsPourAdaptateur.add(evenement.obtenirEvenementPourAdapteur());
+        }
+        return listeEvenementsPourAdaptateur;
+    }
 }

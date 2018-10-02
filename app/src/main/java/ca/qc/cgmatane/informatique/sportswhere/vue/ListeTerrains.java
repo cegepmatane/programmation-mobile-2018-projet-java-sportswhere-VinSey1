@@ -62,10 +62,6 @@ public class ListeTerrains extends AppCompatActivity {
 
                     HashMap<String, String> terrain = (HashMap<String, String>) vueListeTerrains.getItemAtPosition((int)positionItem);
 
-                    Toast message = Toast.makeText(getApplicationContext(), terrain.get("titre"), Toast.LENGTH_LONG);
-
-                    message.show();
-
                     Intent intentionNaviguerDetailsTerrain = new Intent (ListeTerrains.this, DetailsTerrain.class);
 
                     intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.get("id_terrain"));
