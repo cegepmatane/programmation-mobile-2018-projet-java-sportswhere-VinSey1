@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ import ca.qc.cgmatane.informatique.sportswhere.donnee.TerrainDAO;
 public class ListeTerrains extends AppCompatActivity {
 
     static final public int ACTIVITE_LISTE_EVENEMENTS = 2;
+    static final public int ACTIVITE_DETAILS_TERRAIN = 3;
 
     protected TerrainDAO accesseurTerrain;
     protected List<HashMap<String, String>> listeTerrainsPourAdapteur;
@@ -36,7 +39,7 @@ public class ListeTerrains extends AppCompatActivity {
 
         intentionNaviguerListeEvenements = new Intent(this, ListeEvenements.class);
 
-        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_terrains);
+        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_evenements);
 
         actionNaviguerListeEvenements.setOnClickListener(
                 new View.OnClickListener() {
@@ -45,6 +48,33 @@ public class ListeTerrains extends AppCompatActivity {
                     }
                 }
         );
+
+        vueListeTerrains.setOnItemClickListener(
+            new AdapterView.OnItemClickListener(){
+
+                @Override
+                public void onItemClick(AdapterView<?> parent,
+                                        View vue,
+                                        int positionDansAdapteur,
+                                        long positionItem) {
+
+                    ListView vueListeTerrains = (ListView) vue.getParent();
+
+                    HashMap<String, String> terrain = (HashMap<String, String>) vueListeTerrains.getItemAtPosition((int)positionItem);
+
+                    Toast message = Toast.makeText(getApplicationContext(), terrain.get("titre"), Toast.LENGTH_LONG);
+
+                    message.show();
+
+                    Intent intentionNaviguerDetailsTerrain = new Intent (ListeTerrains.this, DetailsTerrain.class);
+
+                    intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.get("id_terrain"));
+
+                    startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
+                }
+            }
+        );
+
     }
 
     private void afficherTousLesTerrains(){

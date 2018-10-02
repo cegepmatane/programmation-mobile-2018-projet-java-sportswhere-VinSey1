@@ -13,7 +13,6 @@ import java.util.List;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.EvenementDAO;
-import ca.qc.cgmatane.informatique.sportswhere.modele.Evenement;
 
 public class ListeEvenements extends AppCompatActivity {
 

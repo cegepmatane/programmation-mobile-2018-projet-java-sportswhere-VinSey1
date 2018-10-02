@@ -67,7 +67,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
 
         intentionNaviguerListeEvenements = new Intent(this, ListeEvenements.class);
 
-        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_terrains);
+        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_evenements);
 
         actionNaviguerListeEvenements.setOnClickListener(
             new View.OnClickListener() {
