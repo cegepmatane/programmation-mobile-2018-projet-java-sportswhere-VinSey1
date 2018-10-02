@@ -45,7 +45,7 @@ package="ca.qc.cgmatane.informatique.sportswhere">
 
     <activity android:name=".vue.ListeTerrains" />
     <activity android:name=".vue.ListeEvenements" />
-    <activity android:name=".vue.Terrain" />
+    <activity android:name=".vue.DetailsTerrain" />
     <activity android:name=".vue.AjouterEvenement" />
 
 </application>

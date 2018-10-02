@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
 
-public class Terrain extends AppCompatActivity {
+public class DetailsTerrain extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
