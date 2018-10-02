@@ -62,7 +62,7 @@ public class DetailsEvenement extends AppCompatActivity {
         actionNaviguerDetailsTerrain.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View arg0) {
-                    intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.getId_terrain());
+                    intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+terrain.getId_terrain());
                     startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
                 }
             }
