@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -17,6 +18,7 @@ import ca.qc.cgmatane.informatique.sportswhere.donnee.EvenementDAO;
 public class ListeEvenements extends AppCompatActivity {
 
     static final public int ACTIVITE_LISTE_TERRAINS = 1;
+    static final public int ACTIVITE_DETAILS_EVENEMENT = 5;
 
     protected EvenementDAO accesseurEvenement;
     protected List<HashMap<String, String>> listeEvenementsPourAdapteur;
@@ -42,6 +44,28 @@ public class ListeEvenements extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View arg0) {
                         startActivityForResult(intentionNaviguerListeTerrains, ACTIVITE_LISTE_TERRAINS);
+                    }
+                }
+        );
+
+        vueListeEvenements.setOnItemClickListener(
+                new AdapterView.OnItemClickListener(){
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent,
+                                            View vue,
+                                            int positionDansAdapteur,
+                                            long positionItem) {
+
+                        ListView vueListeEvenements = (ListView) vue.getParent();
+
+                        HashMap<String, String> evenement = (HashMap<String, String>) vueListeEvenements.getItemAtPosition((int)positionItem);
+
+                        Intent intentionNaviguerDetailsEvenement = new Intent (ListeEvenements.this, DetailsEvenement.class);
+
+                        intentionNaviguerDetailsEvenement.putExtra("id_evenement", evenement.get("id_evenement"));
+
+                        startActivityForResult(intentionNaviguerDetailsEvenement, ACTIVITE_DETAILS_EVENEMENT);
                     }
                 }
         );
