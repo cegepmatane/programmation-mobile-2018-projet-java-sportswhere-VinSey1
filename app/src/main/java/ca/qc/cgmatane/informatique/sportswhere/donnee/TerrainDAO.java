@@ -3,6 +3,7 @@ package ca.qc.cgmatane.informatique.sportswhere.donnee;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
@@ -31,13 +32,14 @@ public class TerrainDAO {
         LatLng position = new LatLng( 48.840897, -67.50821);
         String titre = "Terrain de la Polyvalente de Matane";
         String description = "1 terrain en vrai gazon";
-        Terrain terrain = new Terrain(position, titre, description, 1);
+        String ville = "Matane";
+        Terrain terrain = new Terrain(position, titre, description, ville, 1);
         listeTerrains.add(terrain);
 
         position = new LatLng(48.840691 ,   -67.497435);
         titre = "Terrain du CEGEP de Matane";
         description = "2 terrains en vrai gazon\n1 terrain synthétique";
-        terrain = new Terrain(position, titre, description, 2);
+        terrain = new Terrain(position, titre, description, ville,2);
         listeTerrains.add(terrain);
 
     }
@@ -54,6 +56,15 @@ public class TerrainDAO {
             if(terrain.getId_terrain() == id_terrain) return terrain;
         }
         return null;
+    }
+
+    public List<HashMap<String, String>> recupererListeTerrainsPourAdapteur(){
+        List<HashMap<String, String>> listeTerrainsPourAdaptateur = new ArrayList<HashMap<String, String>>();
+
+        for(Terrain terrain : listeTerrains){
+            listeTerrainsPourAdaptateur.add(terrain.obtenirTerrainPourAdapteur());
+        }
+        return listeTerrainsPourAdaptateur;
     }
 
     public List<Terrain> listerTerrains(){
