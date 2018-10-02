@@ -174,4 +174,15 @@
         app:layout_constraintStart_toEndOf="@+id/action_supprimer_evenement"
         app:layout_constraintTop_toBottomOf="@+id/action_naviguer_details_terrain" />
 
+
+    <Button
+        android:id="@+id/action_naviguer_accueil"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:text="Accueil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_evenement" />
+
 </android.support.constraint.ConstraintLayout>

@@ -20,10 +20,12 @@ public class ListeEvenements extends AppCompatActivity {
     static final public int ACTIVITE_LISTE_TERRAINS = 1;
     static final public int ACTIVITE_DETAILS_EVENEMENT = 5;
 
+
     protected EvenementDAO accesseurEvenement;
     protected List<HashMap<String, String>> listeEvenementsPourAdapteur;
     protected ListView vueListeEvenements;
     private Intent intentionNaviguerListeTerrains;
+    private Intent intentionNaviguerAccueil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,18 @@ public class ListeEvenements extends AppCompatActivity {
 
         afficherTousLesEvenements();
 
+        intentionNaviguerAccueil = new Intent(this, Accueil.class);
+
+        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+
+        actionNaviguerAccueil.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        startActivity(intentionNaviguerAccueil);
+                    }
+                }
+        );
+
         intentionNaviguerListeTerrains = new Intent(this, ListeTerrains.class);
 
         Button actionNaviguerListeTerrains = (Button) findViewById(R.id.action_naviguer_liste_terrains);
@@ -47,6 +61,11 @@ public class ListeEvenements extends AppCompatActivity {
                     }
                 }
         );
+
+
+
+
+
 
         vueListeEvenements.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){

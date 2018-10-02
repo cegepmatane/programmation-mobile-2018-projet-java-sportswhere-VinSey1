@@ -25,6 +25,7 @@ public class ListeTerrains extends AppCompatActivity {
     protected List<HashMap<String, String>> listeTerrainsPourAdapteur;
     protected ListView vueListeTerrains;
     private Intent intentionNaviguerListeEvenements;
+    private Intent intentionNaviguerAccueil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,19 @@ public class ListeTerrains extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View arg0) {
                         startActivityForResult(intentionNaviguerListeEvenements, ACTIVITE_LISTE_EVENEMENTS);
+                    }
+                }
+        );
+
+
+        intentionNaviguerAccueil = new Intent(this, Accueil.class);
+
+        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+
+        actionNaviguerAccueil.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        startActivity(intentionNaviguerAccueil);
                     }
                 }
         );

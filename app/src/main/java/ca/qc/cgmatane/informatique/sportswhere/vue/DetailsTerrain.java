@@ -31,6 +31,7 @@ public class DetailsTerrain extends AppCompatActivity {
     private Intent intentionNaviguerAjouterEvenement;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,8 @@ public class DetailsTerrain extends AppCompatActivity {
                 }
         );
 
+
+      
         TextView titre = (TextView) findViewById(R.id.titre_terrain);
 
         titre.setText(terrain.getTitre());

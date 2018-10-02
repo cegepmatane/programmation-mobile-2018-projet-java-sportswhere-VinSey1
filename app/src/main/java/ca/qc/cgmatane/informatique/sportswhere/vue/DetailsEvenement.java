@@ -26,6 +26,7 @@ public class DetailsEvenement extends AppCompatActivity {
     Evenement evenement;
     Terrain terrain;
     Intent intentionNaviguerDetailsTerrain;
+    private Intent intentionNaviguerAccueil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,8 @@ public class DetailsEvenement extends AppCompatActivity {
             }
         );
 
+
+
         Button actionSupprimerEvenement = (Button) findViewById(R.id.action_supprimer_evenement);
 
         actionSupprimerEvenement.setOnClickListener(
@@ -77,6 +80,19 @@ public class DetailsEvenement extends AppCompatActivity {
                     accesseurEvenement.supprimerEvenement(evenement.getId_evenement());
                 }
             }
+        );
+
+
+        intentionNaviguerAccueil = new Intent(this, Accueil.class);
+
+        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+
+        actionNaviguerAccueil.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        startActivity(intentionNaviguerAccueil);
+                    }
+                }
         );
 
     }
