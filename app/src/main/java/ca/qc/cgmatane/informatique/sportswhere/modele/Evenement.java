@@ -1,6 +1,7 @@
 package ca.qc.cgmatane.informatique.sportswhere.modele;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class Evenement {
 
@@ -63,5 +64,14 @@ public class Evenement {
 
     public void setId_evenement(int id_evenement){
         this.id_evenement = id_evenement;
+    }
+
+    public HashMap<String,String> obtenirEvenementPourAdapteur() {
+        HashMap<String, String> evenementPourAdapteur = new HashMap<String, String>();
+        evenementPourAdapteur.put("nom", this.nom);
+        evenementPourAdapteur.put("date", this.date.getYear()+"-"+this.date.getMonth()+"-"+this.date.getDate());
+        evenementPourAdapteur.put("terrain", ""+this.terrain);
+        evenementPourAdapteur.put("id_evenement", ""+this.id_evenement);
+        return evenementPourAdapteur;
     }
 }

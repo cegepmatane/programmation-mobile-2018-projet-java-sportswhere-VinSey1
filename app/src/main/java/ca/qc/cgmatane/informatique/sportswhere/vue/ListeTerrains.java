@@ -15,7 +15,6 @@ import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 public class ListeTerrains extends AppCompatActivity {
 
     protected TerrainDAO accesseurTerrain;
-    protected List<Terrain> listeTerrains;
     protected List<HashMap<String, String>> listeTerrainsPourAdapteur;
     protected ListView vueListeTerrains;
 
