@@ -16,7 +16,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -68,7 +67,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
 
         intentionNaviguerListeEvenements = new Intent(this, ListeEvenements.class);
 
-        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_evenements);
+        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_terrains);
 
         actionNaviguerListeEvenements.setOnClickListener(
             new View.OnClickListener() {

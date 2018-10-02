@@ -38,7 +38,7 @@
         android:layout_width="368dp"
         android:layout_height="394dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/action_naviguer_liste_evenements"
+        app:layout_constraintBottom_toTopOf="@+id/action_naviguer_liste_terrains"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/action_naviguer_liste_evenements"
+        android:id="@+id/action_naviguer_liste_terrains"
         android:layout_width="258dp"
         android:layout_height="0dp"
         android:layout_marginStart="18dp"

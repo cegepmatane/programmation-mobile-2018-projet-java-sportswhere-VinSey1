@@ -20,7 +20,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/action_naviguer_liste_evenements"
+        android:id="@+id/action_naviguer_liste_terrains"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"

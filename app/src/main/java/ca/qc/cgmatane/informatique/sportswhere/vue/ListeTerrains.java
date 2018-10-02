@@ -13,7 +13,6 @@ import java.util.List;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.TerrainDAO;
-import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
 public class ListeTerrains extends AppCompatActivity {
 
@@ -37,7 +36,7 @@ public class ListeTerrains extends AppCompatActivity {
 
         intentionNaviguerListeEvenements = new Intent(this, ListeEvenements.class);
 
-        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_evenements);
+        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_terrains);
 
         actionNaviguerListeEvenements.setOnClickListener(
                 new View.OnClickListener() {
