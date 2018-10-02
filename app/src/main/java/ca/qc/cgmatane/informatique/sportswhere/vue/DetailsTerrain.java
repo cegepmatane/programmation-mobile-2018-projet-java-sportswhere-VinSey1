@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -20,6 +21,7 @@ import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 public class DetailsTerrain extends AppCompatActivity {
 
     static final public int ACTIVITE_AJOUTER_EVENEMENT = 4;
+    static final public int ACTIVITE_DETAILS_EVENEMENT = 5;
 
     protected TerrainDAO accesseurTerrain;
     protected EvenementDAO accesseurEvenement;
@@ -63,6 +65,28 @@ public class DetailsTerrain extends AppCompatActivity {
         TextView titre = (TextView) findViewById(R.id.titre_terrain);
 
         titre.setText(terrain.getTitre());
+
+        vueListeEvenements.setOnItemClickListener(
+                new AdapterView.OnItemClickListener(){
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent,
+                                            View vue,
+                                            int positionDansAdapteur,
+                                            long positionItem) {
+
+                        ListView vueListeEvenements = (ListView) vue.getParent();
+
+                        HashMap<String, String> evenement = (HashMap<String, String>) vueListeEvenements.getItemAtPosition((int)positionItem);
+
+                        Intent intentionNaviguerDetailsEvenement = new Intent (DetailsTerrain.this, DetailsEvenement.class);
+
+                        intentionNaviguerDetailsEvenement.putExtra("id_evenement", evenement.get("id_evenement"));
+
+                        startActivityForResult(intentionNaviguerDetailsEvenement, ACTIVITE_DETAILS_EVENEMENT);
+                    }
+                }
+        );
     }
 
     private void afficherTousLesEvenements(){
@@ -83,6 +107,10 @@ public class DetailsTerrain extends AppCompatActivity {
         switch(activite)
         {
             case ACTIVITE_AJOUTER_EVENEMENT:
+                afficherTousLesEvenements();
+                break;
+
+            case ACTIVITE_DETAILS_EVENEMENT:
                 afficherTousLesEvenements();
                 break;
         }
