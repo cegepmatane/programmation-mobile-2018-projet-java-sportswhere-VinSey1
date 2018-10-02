@@ -80,7 +80,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nom de l'événement"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/action_naviguer_ajouter_evenement"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
@@ -96,13 +96,13 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="7dp"
         android:text="Chercher"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/action_naviguer_ajouter_evenement"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText4"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/action_naviguer_ajouter_evenement"
         android:layout_width="208dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="122dp"

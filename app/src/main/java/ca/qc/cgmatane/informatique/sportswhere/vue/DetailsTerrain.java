@@ -1,7 +1,10 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -16,11 +19,14 @@ import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
 public class DetailsTerrain extends AppCompatActivity {
 
+    static final public int ACTIVITE_AJOUTER_EVENEMENT = 4;
+
     protected TerrainDAO accesseurTerrain;
     protected EvenementDAO accesseurEvenement;
     protected Terrain terrain;
     protected ListView vueListeEvenements;
     protected List<HashMap<String, String>> listeEvenementsPourAdapteur;
+    private Intent intentionNaviguerAjouterEvenement;
 
 
     @Override
@@ -40,6 +46,19 @@ public class DetailsTerrain extends AppCompatActivity {
         terrain = accesseurTerrain.trouverTerrain(id_terrain);
 
         afficherTousLesEvenements();
+
+        intentionNaviguerAjouterEvenement = new Intent(this, AjouterEvenement.class);
+
+        Button actionNaviguerAjouterEvenement = (Button) findViewById(R.id.action_naviguer_ajouter_evenement);
+
+        actionNaviguerAjouterEvenement.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        intentionNaviguerAjouterEvenement.putExtra("terrain", terrain.getId_terrain());
+                        startActivityForResult(intentionNaviguerAjouterEvenement, ACTIVITE_AJOUTER_EVENEMENT);
+                    }
+                }
+        );
 
         TextView titre = (TextView) findViewById(R.id.titre_terrain);
 
