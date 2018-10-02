@@ -139,7 +139,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/action_supprimer_evenement"
         android:layout_width="167dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -147,10 +147,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/action_naviguer_details_terrain" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/action_naviguer_details_terrain"
         android:layout_width="167dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -171,7 +171,7 @@
         android:text="Intéressé"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.62"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintStart_toEndOf="@+id/action_supprimer_evenement"
+        app:layout_constraintTop_toBottomOf="@+id/action_naviguer_details_terrain" />
 
 </android.support.constraint.ConstraintLayout>

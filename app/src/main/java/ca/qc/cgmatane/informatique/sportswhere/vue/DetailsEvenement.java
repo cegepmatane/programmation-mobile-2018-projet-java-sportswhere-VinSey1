@@ -1,7 +1,10 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -16,10 +19,13 @@ import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
 public class DetailsEvenement extends AppCompatActivity {
 
+    static final public int ACTIVITE_DETAILS_TERRAIN = 3;
+
     EvenementDAO accesseurEvenement;
     TerrainDAO accesseurTerrain;
     Evenement evenement;
     Terrain terrain;
+    Intent intentionNaviguerDetailsTerrain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +54,35 @@ public class DetailsEvenement extends AppCompatActivity {
         date.setText(dateEvenement.getYear()+"-"+dateEvenement.getMonth()+"-"+dateEvenement.getDate());
         titreTerrain.setText(terrain.getTitre());
         villeTerrain.setText(terrain.getVille());
+
+        Button actionNaviguerDetailsTerrain = (Button) findViewById(R.id.action_naviguer_details_terrain);
+
+        intentionNaviguerDetailsTerrain = new Intent(this, DetailsTerrain.class);
+
+        actionNaviguerDetailsTerrain.setOnClickListener(
+            new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.getId_terrain());
+                    startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
+                }
+            }
+        );
+
+        Button actionSupprimerEvenement = (Button) findViewById(R.id.action_supprimer_evenement);
+
+        actionSupprimerEvenement.setOnClickListener(
+            new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    naviguerPrecedenteVue();
+                    accesseurEvenement.supprimerEvenement(evenement.getId_evenement());
+                }
+            }
+        );
+
     }
+
+    private void naviguerPrecedenteVue(){
+        this.finish();
+    };
+
 }

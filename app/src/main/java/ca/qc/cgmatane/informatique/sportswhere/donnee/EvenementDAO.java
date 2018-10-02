@@ -3,6 +3,7 @@ package ca.qc.cgmatane.informatique.sportswhere.donnee;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import ca.qc.cgmatane.informatique.sportswhere.modele.Evenement;
@@ -99,5 +100,14 @@ public class EvenementDAO {
 
     public void ajouterEvenement(Evenement evenement) {
         listeEvenements.add(evenement);
+    }
+
+    public void supprimerEvenement(int id_evenement) {
+        for (Iterator<Evenement> iterateur = listeEvenements.iterator(); iterateur.hasNext(); ) {
+            Evenement evenement = iterateur.next();
+            if (evenement.getId_evenement() == id_evenement) {
+                iterateur.remove();
+            }
+        }
     }
 }

@@ -83,4 +83,14 @@ public class ListeEvenements extends AppCompatActivity {
 
         vueListeEvenements.setAdapter(adapteur);
     }
+
+    protected void onActivityResult(int activite, int resultat, Intent donnees)
+    {
+        switch(activite)
+        {
+            case ACTIVITE_DETAILS_EVENEMENT:
+                afficherTousLesEvenements();
+                break;
+        }
+    }
 }
