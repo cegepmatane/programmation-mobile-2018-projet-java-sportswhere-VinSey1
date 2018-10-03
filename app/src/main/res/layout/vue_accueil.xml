@@ -30,7 +30,6 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="7dp"
         android:text="Afficher la liste des événements"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText4"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +45,6 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="7dp"
         android:text="Afficher la liste des terrains"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText4"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +62,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nom du terrain"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +77,6 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="7dp"
         android:text="Chercher"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText4"
         app:layout_constraintTop_toTopOf="parent" />
