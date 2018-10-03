@@ -82,10 +82,10 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         carteTerrains = googleMap;
-
+        float zoom = 13.0f;
+        /*carteTerrains.animateCamera(CameraUpdateFactory.zoomTo(13), 10, null);*/
         LatLng emplacementDeBase = new LatLng( 48.8526, -67.518);
-        carteTerrains.moveCamera(CameraUpdateFactory.newLatLng(emplacementDeBase));
-        carteTerrains.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
+        carteTerrains.moveCamera(CameraUpdateFactory.newLatLngZoom(emplacementDeBase, zoom));
 
         for(Terrain terrain : this.listeTerrains){
             carteTerrains.addMarker(new MarkerOptions().position(terrain.getPosition()).title(terrain.getTitre()).snippet(terrain.getDescription()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
