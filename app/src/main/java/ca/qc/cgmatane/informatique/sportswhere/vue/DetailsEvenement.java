@@ -1,6 +1,7 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,9 @@ public class DetailsEvenement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_details_evenement);
 
