@@ -1,5 +1,7 @@
 package ca.qc.cgmatane.informatique.sportswhere.donnee;
 
+import android.database.Cursor;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -67,7 +69,39 @@ public class TerrainDAO {
         return listeTerrainsPourAdaptateur;
     }
 
-    public List<Terrain> listerTerrains(){
+    public List<Terrain> listerTerrainBD() {
+        String LISTER_TERRAINS = "SELECT * FROM terrain";
+        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_TERRAINS,null);
+        this.listeTerrains.clear();
+        Terrain terrain;
+
+        int indexId_Terrain = curseur.getColumnIndex("id_terrain");
+        int indexTitre = curseur.getColumnIndex("titre");
+        int indexVille = curseur.getColumnIndex("ville");
+        int indexDescription = curseur.getColumnIndex("description");
+        int indexImage = curseur.getColumnIndex("image");
+        int indexLatitude = curseur.getColumnIndex("latitude");
+        int indexLongitude = curseur.getColumnIndex("longitude");
+
+
+        for (curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()) {
+            int id_terrain = curseur.getInt(indexId_Terrain);
+            String titre = curseur.getString(indexTitre);
+            String ville = curseur.getString(indexVille);
+            String description = curseur.getString(indexDescription);
+            String image = curseur.getString(indexImage);
+            int latitude = curseur.getInt(indexLatitude);
+            int longitude = curseur.getInt(indexLongitude);
+            LatLng position = new LatLng(latitude, longitude);
+            terrain = new Terrain(position, titre, description, ville, image, id_terrain);
+            this.listeTerrains.add(terrain);
+        }
+
+
+        return listeTerrains;
+    }
+
+    public List<Terrain> listerTerrains() {
         return listeTerrains;
     }
 }

@@ -13,6 +13,7 @@ public class Terrain {
     protected String titre;
     protected String description;
     protected String ville;
+    protected String image;
 
     public Terrain(LatLng position, String titre, String description, String ville){
         this.position = position;
@@ -27,6 +28,15 @@ public class Terrain {
         this.description = description;
         this.id_terrain = id_terrain;
         this.ville = ville;
+    }
+
+    public Terrain(LatLng position, String titre, String description, String ville, String image, int id_terrain){
+        this.position = position;
+        this.titre = titre;
+        this.description = description;
+        this.id_terrain = id_terrain;
+        this.ville = ville;
+        this.image = image;
     }
 
     public String getTitre(){
