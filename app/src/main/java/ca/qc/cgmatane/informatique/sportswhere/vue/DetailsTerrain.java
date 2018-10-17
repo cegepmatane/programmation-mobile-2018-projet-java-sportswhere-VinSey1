@@ -30,6 +30,7 @@ public class DetailsTerrain extends AppCompatActivity {
     protected ListView vueListeEvenements;
     protected List<HashMap<String, String>> listeEvenementsPourAdapteur;
     private Intent intentionNaviguerAjouterEvenement;
+    private Intent intentionNaviguerAccueil;
 
 
 
@@ -67,7 +68,17 @@ public class DetailsTerrain extends AppCompatActivity {
                 }
         );
 
+        intentionNaviguerAccueil = new Intent(this, Accueil.class);
 
+        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+
+        actionNaviguerAccueil.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        startActivity(intentionNaviguerAccueil);
+                    }
+                }
+        );
       
         TextView titre = (TextView) findViewById(R.id.titre_terrain);
 

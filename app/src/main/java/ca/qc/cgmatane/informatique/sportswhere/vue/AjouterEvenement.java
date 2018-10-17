@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class AjouterEvenement extends AppCompatActivity {
     protected EditText champNom;
     protected EditText champDescription;
     protected EditText champDate;
+    private Intent intentionNaviguerAccueil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,18 @@ public class AjouterEvenement extends AppCompatActivity {
                     ajouterEvenement();
                 }
             }
+        );
+
+        intentionNaviguerAccueil = new Intent(this, Accueil.class);
+
+        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+
+        actionNaviguerAccueil.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        startActivity(intentionNaviguerAccueil);
+                    }
+                }
         );
     }
 
