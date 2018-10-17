@@ -44,7 +44,7 @@
     <Button
         android:id="@+id/action_naviguer_liste_evenements"
         android:layout_width="344dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="8dp"
@@ -58,7 +58,7 @@
     <Button
         android:id="@+id/action_naviguer_liste_terrains"
         android:layout_width="344dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="8dp"

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".vue.DetailsEvenement">
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sportswhere" />
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -62,7 +73,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.016"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ville_terrain" />
 
@@ -70,7 +81,7 @@
         android:id="@+id/nom_evenement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
         android:text="Événement 1"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:textSize="18sp"
@@ -141,19 +152,19 @@
     <Button
         android:id="@+id/action_supprimer_evenement"
         android:layout_width="167dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:text="Supprimer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/action_naviguer_details_terrain" />
 
     <Button
         android:id="@+id/action_naviguer_details_terrain"
         android:layout_width="167dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:text="Voir le terrain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,26 +174,23 @@
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginRight="62dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
         android:text="Intéressé"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.62"
-        app:layout_constraintStart_toEndOf="@+id/action_supprimer_evenement"
         app:layout_constraintTop_toBottomOf="@+id/action_naviguer_details_terrain" />
 
 
     <Button
         android:id="@+id/action_naviguer_accueil"
-        android:layout_width="167dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:text="Accueil"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_evenement" />
+        app:layout_constraintTop_toBottomOf="@+id/action_supprimer_evenement" />
 
 </android.support.constraint.ConstraintLayout>

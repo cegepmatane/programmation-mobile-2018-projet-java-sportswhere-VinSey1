@@ -70,6 +70,7 @@ public class TerrainDAO {
     }
 
     public List<Terrain> listerTerrainBD() {
+        /*
         String LISTER_TERRAINS = "SELECT * FROM terrain";
         Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_TERRAINS,null);
         this.listeTerrains.clear();
@@ -97,7 +98,7 @@ public class TerrainDAO {
             this.listeTerrains.add(terrain);
         }
 
-
+*/
         return listeTerrains;
     }
 

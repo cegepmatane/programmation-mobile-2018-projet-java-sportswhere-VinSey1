@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/programmation-mobile-2018-projet-java-sportswhere-VinSey1.git.iml" filepath="$PROJECT_DIR$/programmation-mobile-2018-projet-java-sportswhere-VinSey1.git.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projet-java-sportswhere-VinSey1.iml" filepath="$PROJECT_DIR$/projet-java-sportswhere-VinSey1.iml" />
     </modules>
   </component>
 </project>
