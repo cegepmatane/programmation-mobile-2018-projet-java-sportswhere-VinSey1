@@ -27,6 +27,7 @@ public class ListeTerrains extends AppCompatActivity {
     protected ListView vueListeTerrains;
     private Intent intentionNaviguerListeEvenements;
     private Intent intentionNaviguerAccueil;
+    private int nombreTerrains;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,8 @@ public class ListeTerrains extends AppCompatActivity {
                     Intent intentionNaviguerDetailsTerrain = new Intent (ListeTerrains.this, DetailsTerrain.class);
 
                     intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.get("id_terrain"));
+
+                    intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", listeTerrainsPourAdapteur.size());
 
                     startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
                 }
