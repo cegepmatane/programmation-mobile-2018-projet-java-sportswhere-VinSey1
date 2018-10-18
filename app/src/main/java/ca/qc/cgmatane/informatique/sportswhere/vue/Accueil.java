@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -94,6 +95,13 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
         for(Terrain terrain : this.listeTerrains){
             carteTerrains.addMarker(new MarkerOptions().position(terrain.getPosition()).title(terrain.getTitre()).snippet(terrain.getDescription()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
+
+        carteTerrains.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Toast.makeText(Accueil.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         carteTerrains.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
