@@ -56,56 +56,6 @@ public class DetailsTerrain extends AppCompatActivity {
         String parametre_id_terrain = (String) parametres.get("id_terrain");
         int id_terrain = Integer.parseInt(parametre_id_terrain);
         nombreTerrains = (Integer) parametres.get("nombre_terrains");
-
-        View myView = findViewById(R.id.fenetre_details_terrain);
-        myView.setOnTouchListener(new OnSwipeTouchListener(DetailsTerrain.this) {
-            public void onSwipeTop() {}
-            public void onSwipeRight() {
-                /*
-                Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
-
-                int idTerrain = terrain.getId_terrain()+1;
-
-                if(idTerrain>nombreTerrains-1){
-                    idTerrain = 0;
-                }
-                Toast.makeText(DetailsTerrain.this, ""+idTerrain, Toast.LENGTH_SHORT).show();
-
-
-                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
-
-                intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", nombreTerrains);
-
-                startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
-                */
-
-                Toast.makeText(DetailsTerrain.this, "Right", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeLeft() {
-                /*
-                Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
-
-                int idTerrain = terrain.getId_terrain()-1;
-
-                if(idTerrain<0){
-                    idTerrain = nombreTerrains-1;
-                }
-
-                Toast.makeText(DetailsTerrain.this, ""+idTerrain, Toast.LENGTH_SHORT).show();
-
-                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
-
-                intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", nombreTerrains);
-
-                startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
-                */
-
-                Toast.makeText(DetailsTerrain.this, "Left", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeBottom() {}
-
-        });
-
         terrain = accesseurTerrain.trouverTerrain(id_terrain);
 
         afficherTousLesEvenements();
@@ -160,6 +110,45 @@ public class DetailsTerrain extends AppCompatActivity {
                     }
                 }
         );
+
+        View myView = findViewById(R.id.fenetre_details_terrain);
+        myView.setOnTouchListener(new OnSwipeTouchListener(DetailsTerrain.this) {
+            public void onSwipeTop() {}
+            public void onSwipeRight() {
+
+                Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
+
+                int idTerrain = terrain.getId_terrain()+1;
+
+                if(idTerrain>nombreTerrains-1){
+                    idTerrain = 0;
+                }
+
+                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
+
+                intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", nombreTerrains);
+
+                startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
+            }
+            public void onSwipeLeft() {
+
+                Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
+
+                int idTerrain = terrain.getId_terrain()-1;
+
+                if(idTerrain<0){
+                    idTerrain = nombreTerrains-1;
+                }
+
+                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
+
+                intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", nombreTerrains);
+
+                startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
+            }
+            public void onSwipeBottom() {}
+
+        });
     }
 
     private void afficherTousLesEvenements(){

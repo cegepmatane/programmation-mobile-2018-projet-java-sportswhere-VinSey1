@@ -35,13 +35,13 @@ public class TerrainDAO {
         String titre = "Terrain de la Polyvalente de Matane";
         String description = "1 terrain en vrai gazon";
         String ville = "Matane";
-        Terrain terrain = new Terrain(position, titre, description, ville, 1);
+        Terrain terrain = new Terrain(position, titre, description, ville, 0);
         listeTerrains.add(terrain);
 
         position = new LatLng(48.840691 ,   -67.497435);
         titre = "Terrain du CEGEP de Matane";
         description = "2 terrains en vrai gazon\n1 terrain synthétique";
-        terrain = new Terrain(position, titre, description, ville,2);
+        terrain = new Terrain(position, titre, description, ville,1);
         listeTerrains.add(terrain);
 
     }

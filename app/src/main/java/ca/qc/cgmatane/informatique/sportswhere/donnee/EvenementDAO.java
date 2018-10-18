@@ -32,25 +32,25 @@ public class EvenementDAO {
         Date date = new Date(2018, 10, 2);
         String nom = "Match de soccer";
         String description = "Match entre les Capitaines et Rimouski";
-        Evenement evenement = new Evenement(date, nom, description, 1, 1);
+        Evenement evenement = new Evenement(date, nom, description, 0, 1);
         listeEvenements.add(evenement);
 
         date = new Date(2018, 10, 1);
         nom = "Match de football";
         description = "Match entre les Capitaines et la Polyvalence";
-        evenement = new Evenement(date, nom, description, 2, 2);
+        evenement = new Evenement(date, nom, description, 1, 2);
         listeEvenements.add(evenement);
 
         date = new Date(2018, 11, 5);
         nom = "Séance de cinéma";
         description = "Rediffusion de 'Histoire de jouets'";
-        evenement = new Evenement(date, nom, description, 1, 3);
+        evenement = new Evenement(date, nom, description, 0, 3);
         listeEvenements.add(evenement);
 
         date = new Date(2020, 01, 7);
         nom = "Concert";
         description = "Concert de l'incroyable F. Levy";
-        evenement = new Evenement(date, nom, description, 2, 4);
+        evenement = new Evenement(date, nom, description, 1, 4);
         listeEvenements.add(evenement);
 
     }
