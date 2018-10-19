@@ -77,6 +77,7 @@ public class AjouterEvenement extends AppCompatActivity {
     private void ajouterEvenement(){
         String dateCoupee[] = champDate.getText().toString().split("/");
         Date date = new Date (Integer.parseInt(dateCoupee[2]), Integer.parseInt(dateCoupee[1]), Integer.parseInt(dateCoupee[0]));
+        //date.getTime();
         Evenement evenement = new Evenement(date,
                 champNom.getText().toString(),
                 champDescription.getText().toString(),
