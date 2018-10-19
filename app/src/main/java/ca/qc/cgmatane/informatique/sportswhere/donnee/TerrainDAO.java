@@ -69,6 +69,10 @@ public class TerrainDAO {
         return listeTerrainsPourAdaptateur;
     }
 
+    public int getNombreTerrains(){
+        return listeTerrains.size();
+    }
+
     public List<Terrain> listerTerrainBD() {
         /*
         String LISTER_TERRAINS = "SELECT * FROM terrain";

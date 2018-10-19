@@ -85,8 +85,6 @@ public class ListeTerrains extends AppCompatActivity {
 
                     intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.get("id_terrain"));
 
-                    intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", listeTerrainsPourAdapteur.size());
-
                     startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
                 }
             }

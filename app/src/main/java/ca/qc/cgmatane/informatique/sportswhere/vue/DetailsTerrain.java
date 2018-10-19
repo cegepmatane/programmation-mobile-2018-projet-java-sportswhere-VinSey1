@@ -37,8 +37,6 @@ public class DetailsTerrain extends AppCompatActivity {
     private Intent intentionNaviguerAccueil;
     private int nombreTerrains;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
@@ -55,7 +53,7 @@ public class DetailsTerrain extends AppCompatActivity {
         Bundle parametres = this.getIntent().getExtras();
         String parametre_id_terrain = (String) parametres.get("id_terrain");
         int id_terrain = Integer.parseInt(parametre_id_terrain);
-        nombreTerrains = (Integer) parametres.get("nombre_terrains");
+        nombreTerrains = accesseurTerrain.getNombreTerrains();
         terrain = accesseurTerrain.trouverTerrain(id_terrain);
 
         afficherTousLesEvenements();
@@ -126,8 +124,6 @@ public class DetailsTerrain extends AppCompatActivity {
 
                 intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
 
-                intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", nombreTerrains);
-
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
             public void onSwipeLeft() {
@@ -141,8 +137,6 @@ public class DetailsTerrain extends AppCompatActivity {
                 }
 
                 intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
-
-                intentionNaviguerDetailsTerrain.putExtra("nombre_terrains", nombreTerrains);
 
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
