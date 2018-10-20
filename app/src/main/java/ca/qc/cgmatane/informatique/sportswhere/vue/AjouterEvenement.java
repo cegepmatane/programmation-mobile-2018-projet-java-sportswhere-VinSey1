@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -75,15 +76,26 @@ public class AjouterEvenement extends AppCompatActivity {
     }
 
     private void ajouterEvenement(){
-        String dateCoupee[] = champDate.getText().toString().split("/");
-        Date date = new Date (Integer.parseInt(dateCoupee[2]), Integer.parseInt(dateCoupee[1]), Integer.parseInt(dateCoupee[0]));
-        //date.getTime();
-        Evenement evenement = new Evenement(date,
-                champNom.getText().toString(),
-                champDescription.getText().toString(),
-                terrain.getId_terrain());
-        accesseurEvenement.ajouterEvenement(evenement);
-        naviguerRetourDetailsTerrain();
+        if(champNom.getText().toString().isEmpty() || champNom.getText().toString().isEmpty() || champDate.getText().toString().isEmpty()){
+            Toast.makeText(AjouterEvenement.this, "Merci de remplir tous les champs", Toast.LENGTH_SHORT).show();
+        } else {
+            String dateCoupee[] = champDate.getText().toString().split("/");
+            if(dateCoupee.length != 3 ||Integer.parseInt(dateCoupee[0]) > 31 ||
+                    Integer.parseInt(dateCoupee[1]) > 12 || Integer.parseInt(dateCoupee[1]) < 2018) {
+                Toast.makeText(AjouterEvenement.this, "Merci de rentrer une date correcte", Toast.LENGTH_SHORT).show();
+            } else {
+                Date date = new Date (Integer.parseInt(dateCoupee[2]),
+                        Integer.parseInt(dateCoupee[1]),
+                        Integer.parseInt(dateCoupee[0]));
+                //date.getTime();
+                Evenement evenement = new Evenement(date,
+                        champNom.getText().toString(),
+                        champDescription.getText().toString(),
+                        terrain.getId_terrain());
+                accesseurEvenement.ajouterEvenement(evenement);
+                naviguerRetourDetailsTerrain();
+            }
+        }
     }
 
     private void naviguerRetourDetailsTerrain() {
