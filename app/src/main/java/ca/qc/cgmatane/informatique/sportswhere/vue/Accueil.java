@@ -34,6 +34,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
 
     static final public int ACTIVITE_LISTE_TERRAINS = 1;
     static final public int ACTIVITE_LISTE_EVENEMENTS = 2;
+    static final public int ACTIVITE_DETAILS_TERRAIN = 3;
 
     private GoogleMap carteTerrains;
     private TerrainDAO accesseurTerrain;
@@ -41,6 +42,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
     private List<Terrain> listeTerrains;
     private Intent intentionNaviguerListeTerrains;
     private Intent intentionNaviguerListeEvenements;
+    private Intent intentionNaviguerDetailsTerrain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,9 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
         carteTerrains.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Toast.makeText(Accueil.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+                intentionNaviguerDetailsTerrain = new Intent(Accueil.this, DetailsTerrain.class);
+                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+accesseurTerrain.trouverTerrain(marker.getTitle()).getId_terrain());
+                startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
         });
 

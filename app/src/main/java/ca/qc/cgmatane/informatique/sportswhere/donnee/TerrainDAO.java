@@ -48,7 +48,7 @@ public class TerrainDAO {
 
     public Terrain trouverTerrain(String nom){
         for(Terrain terrain: this.listeTerrains){
-            if(terrain.getTitre() == nom) return terrain;
+            if(terrain.getTitre().equals(nom)) return terrain;
         }
         return null;
     }
