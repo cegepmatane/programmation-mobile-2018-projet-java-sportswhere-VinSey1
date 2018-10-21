@@ -1,16 +1,34 @@
 package ca.qc.cgmatane.informatique.sportswhere.donnee;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import ca.qc.cgmatane.informatique.sportswhere.modele.Evenement;
+import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
 public class EvenementDAO {
 
     private static EvenementDAO instance = null;
+    private String xml;
+    private ServiceDAO accesseurService;
 
     protected List<Evenement> listeEvenements;
 
@@ -22,11 +40,49 @@ public class EvenementDAO {
     }
 
     public EvenementDAO(){
-        initialiserDonneesTestEvenements();
+        try {
+            accesseurService = new ServiceDAO();
+            xml = accesseurService.execute("http://158.69.192.249/sportswhere/liste_evenements.php", "</evenements>").get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            initialiserDonneesTestEvenements();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initialiserDonneesTestEvenements(){
+    private void initialiserDonneesTestEvenements() throws ParserConfigurationException, IOException, SAXException {
 
+        listeEvenements = new ArrayList<Evenement>();
+        DocumentBuilder parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document document = parseur.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
+        NodeList listeNoeudAnnonces = document.getElementsByTagName("evenement");
+
+        for (int iterateur = 0; iterateur < listeNoeudAnnonces.getLength(); iterateur++) {
+            Element noeudAnnonce = (Element) listeNoeudAnnonces.item(iterateur);
+
+            int id = Integer.parseInt(noeudAnnonce.getElementsByTagName("id_evenement").item(0).getTextContent());
+            String nom = noeudAnnonce.getElementsByTagName("nom").item(0).getTextContent();
+            String description = noeudAnnonce.getElementsByTagName("description").item(0).getTextContent();
+            Long dateEnMillisecondes  = Long.parseLong(noeudAnnonce.getElementsByTagName("date").item(0).getTextContent());
+            int terrain = Integer.parseInt(noeudAnnonce.getElementsByTagName("terrain").item(0).getTextContent());
+
+            Date date = new Date(dateEnMillisecondes);
+
+            Evenement evenement = new Evenement(date, nom, description, terrain, id);
+
+            listeEvenements.add(evenement);
+        }
+        /*
         listeEvenements = new ArrayList<Evenement>();
 
         Date date = new Date(2018, 10, 2);
@@ -52,6 +108,7 @@ public class EvenementDAO {
         description = "Concert de l'incroyable F. Levy";
         evenement = new Evenement(date, nom, description, 1, 4);
         listeEvenements.add(evenement);
+        */
 
     }
 

@@ -66,11 +66,6 @@ public class ListeEvenements extends AppCompatActivity {
                 }
         );
 
-
-
-
-
-
         vueListeEvenements.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
 
