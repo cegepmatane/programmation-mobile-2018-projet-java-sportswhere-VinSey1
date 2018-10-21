@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
 import ca.qc.cgmatane.informatique.sportswhere.R;
 import ca.qc.cgmatane.informatique.sportswhere.modele.AlarmeReception;
 
@@ -38,9 +40,9 @@ public class Alarme extends AppCompatActivity {
 
         Log.d("TestTemps",""+System.currentTimeMillis());
 
-        gestionnaireAlarme.set(AlarmManager.RTC_WAKEUP, (System.currentTimeMillis()+3000), attenteIntentionLancerAlarme);
+        gestionnaireAlarme.set(AlarmManager.RTC_WAKEUP, tempsAlarme, attenteIntentionLancerAlarme);
 
-        //Toast.makeText(this, "Alarme dans " + ((tempsAlarme - System.currentTimeMillis()) / 3600) + " heures",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Alarme prévue pour le " + new SimpleDateFormat("dd/MM/yyyy").format(tempsAlarme),Toast.LENGTH_LONG).show();
         this.finish();
     }
 }

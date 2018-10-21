@@ -85,15 +85,7 @@ public class DetailsEvenement extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean estCoche){
                 if(estCoche){
-                    long dateAlarme = 0;
-                    try{
-                        dateAlarme = new SimpleDateFormat("dd/MM/yyyy").parse(
-                                dateEvenement.getDay()+"/"+
-                                dateEvenement.getMonth()+"/"+
-                                dateEvenement.getYear()).getTime();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    long dateAlarme = evenement.getDate();
                     evenement.ajouterAlarme(DetailsEvenement.this, dateAlarme);
                 } else{
 
