@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -73,7 +76,18 @@ public class DetailsEvenement extends AppCompatActivity {
             }
         );
 
+        CheckBox estInteresse = ( CheckBox ) findViewById( R.id.action_est_interesse );
+        estInteresse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean estCoche){
+                if(estCoche){
 
+                } else{
+
+                }
+                Toast.makeText(DetailsEvenement.this, ""+estCoche, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Button actionSupprimerEvenement = (Button) findViewById(R.id.action_supprimer_evenement);
 
