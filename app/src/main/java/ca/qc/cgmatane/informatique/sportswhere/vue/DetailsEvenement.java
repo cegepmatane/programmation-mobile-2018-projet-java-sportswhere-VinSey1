@@ -62,8 +62,8 @@ public class DetailsEvenement extends AppCompatActivity {
 
         nom.setText(evenement.getNom());
         description.setText(evenement.getDescription());
-        final Date dateEvenement = evenement.getDate();
-        date.setText(dateEvenement.getYear()+"-"+dateEvenement.getMonth()+"-"+dateEvenement.getDate());
+        final Date dateEvenement = new Date(evenement.getDate());
+        date.setText(evenement.getDateTexte());
         titreTerrain.setText(terrain.getTitre());
         villeTerrain.setText(terrain.getVille());
 

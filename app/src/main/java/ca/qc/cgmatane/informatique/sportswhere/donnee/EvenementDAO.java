@@ -73,10 +73,8 @@ public class EvenementDAO {
             int id = Integer.parseInt(noeudAnnonce.getElementsByTagName("id_evenement").item(0).getTextContent());
             String nom = noeudAnnonce.getElementsByTagName("nom").item(0).getTextContent();
             String description = noeudAnnonce.getElementsByTagName("description").item(0).getTextContent();
-            Long dateEnMillisecondes  = Long.parseLong(noeudAnnonce.getElementsByTagName("date").item(0).getTextContent());
+            Long date  = Long.parseLong(noeudAnnonce.getElementsByTagName("date").item(0).getTextContent());
             int terrain = Integer.parseInt(noeudAnnonce.getElementsByTagName("terrain").item(0).getTextContent());
-
-            Date date = new Date(dateEnMillisecondes);
 
             Evenement evenement = new Evenement(date, nom, description, terrain, id);
 

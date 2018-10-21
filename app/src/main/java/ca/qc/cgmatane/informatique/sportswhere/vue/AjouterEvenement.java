@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
@@ -57,7 +60,11 @@ public class AjouterEvenement extends AppCompatActivity {
             new View.OnClickListener()
             {
                 public void onClick(View arg0) {
-                    ajouterEvenement();
+                    try {
+                        ajouterEvenement();
+                    } catch (ParseException e) {
+                        Toast.makeText(AjouterEvenement.this, "Merci de rentrer une date correcte", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         );
@@ -75,20 +82,15 @@ public class AjouterEvenement extends AppCompatActivity {
         );
     }
 
-    private void ajouterEvenement(){
-        if(champNom.getText().toString().isEmpty() || champNom.getText().toString().isEmpty() || champDate.getText().toString().isEmpty()){
+    private void ajouterEvenement() throws ParseException {
+        if (champNom.getText().toString().isEmpty() || champNom.getText().toString().isEmpty() || champDate.getText().toString().isEmpty()) {
             Toast.makeText(AjouterEvenement.this, "Merci de remplir tous les champs", Toast.LENGTH_SHORT).show();
         } else {
-            String dateCoupee[] = champDate.getText().toString().split("/");
-            if(dateCoupee.length != 3 ||Integer.parseInt(dateCoupee[0]) > 31 ||
-                    Integer.parseInt(dateCoupee[1]) > 12 || Integer.parseInt(dateCoupee[1]) < 2018) {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(champDate.getText().toString());
+            if (date.getTime() < System.currentTimeMillis()) {
                 Toast.makeText(AjouterEvenement.this, "Merci de rentrer une date correcte", Toast.LENGTH_SHORT).show();
             } else {
-                Date date = new Date (Integer.parseInt(dateCoupee[2]),
-                        Integer.parseInt(dateCoupee[1]),
-                        Integer.parseInt(dateCoupee[0]));
-                //date.getTime();
-                Evenement evenement = new Evenement(date,
+                Evenement evenement = new Evenement(date.getTime(),
                         champNom.getText().toString(),
                         champDescription.getText().toString(),
                         terrain.getId_terrain());
