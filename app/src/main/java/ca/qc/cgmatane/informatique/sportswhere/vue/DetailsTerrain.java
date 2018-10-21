@@ -4,19 +4,17 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
 
-import ca.qc.cgmatane.informatique.sportswhere.OnSwipeTouchListener;
+import ca.qc.cgmatane.informatique.sportswhere.action.EcouteurSurBalayement;
 import ca.qc.cgmatane.informatique.sportswhere.R;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.EvenementDAO;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.TerrainDAO;
@@ -110,9 +108,9 @@ public class DetailsTerrain extends AppCompatActivity {
         );
 
         View myView = findViewById(R.id.fenetre_details_terrain);
-        myView.setOnTouchListener(new OnSwipeTouchListener(DetailsTerrain.this) {
-            public void onSwipeTop() {}
-            public void onSwipeRight() {
+        myView.setOnTouchListener(new EcouteurSurBalayement(DetailsTerrain.this) {
+            public void balayageHaut() {}
+            public void balayageGauche() {
 
                 Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
 
@@ -126,7 +124,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
-            public void onSwipeLeft() {
+            public void balayageDroit() {
 
                 Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
 
@@ -140,7 +138,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
-            public void onSwipeBottom() {}
+            public void balayageBas() {}
 
         });
     }
