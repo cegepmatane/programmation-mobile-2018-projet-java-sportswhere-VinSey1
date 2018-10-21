@@ -1,15 +1,26 @@
 package ca.qc.cgmatane.informatique.sportswhere.modele;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import java.util.Date;
 import java.util.HashMap;
 
-public class Evenement {
+import ca.qc.cgmatane.informatique.sportswhere.vue.Alarme;
+import ca.qc.cgmatane.informatique.sportswhere.vue.DetailsEvenement;
+
+public class Evenement extends AppCompatActivity {
 
     protected Date date;
     protected String nom;
     protected String description;
     protected int terrain;
     protected int id_evenement;
+    protected static final int ACTIVITE_AJOUTER_ALARME = 6;
+
 
     public Evenement(Date date, String nom, String description, int terrain){
         this.date = date;
@@ -73,5 +84,25 @@ public class Evenement {
         evenementPourAdapteur.put("terrain", ""+this.terrain);
         evenementPourAdapteur.put("id_evenement", ""+this.id_evenement);
         return evenementPourAdapteur;
+    }
+
+    Activity activite;
+    public void ajouterAlarme(Context context, long dateAlarme){
+        Log.d("Contexte : ", ""+context);
+        Intent intententionLancerAlarme = new Intent(context, Alarme.class);
+        intententionLancerAlarme.putExtra("nom", this.getNom());
+        intententionLancerAlarme.putExtra("description", this.getDescription());
+        intententionLancerAlarme.putExtra("tempsAlarme", dateAlarme);
+        activite = (Activity) context;
+
+        activite.startActivityForResult(intententionLancerAlarme, ACTIVITE_AJOUTER_ALARME);
+    }
+
+    protected void onActivityResult(int activite, int resultat, Intent donnees){
+        switch (activite){
+            case ACTIVITE_AJOUTER_ALARME:
+                this.finish();
+                break;
+        }
     }
 }

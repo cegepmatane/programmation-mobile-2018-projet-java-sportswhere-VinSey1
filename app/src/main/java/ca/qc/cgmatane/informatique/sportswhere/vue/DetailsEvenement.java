@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
@@ -31,6 +34,7 @@ public class DetailsEvenement extends AppCompatActivity {
     Terrain terrain;
     Intent intentionNaviguerDetailsTerrain;
     private Intent intentionNaviguerAccueil;
+    Activity activite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +56,13 @@ public class DetailsEvenement extends AppCompatActivity {
 
         TextView nom = (TextView) findViewById(R.id.nom_evenement);
         TextView description = (TextView) findViewById(R.id.description_evenement);
-        TextView date = (TextView) findViewById(R.id.date_evenement);
+        final TextView date = (TextView) findViewById(R.id.date_evenement);
         TextView titreTerrain = (TextView) findViewById(R.id.titre_terrain);
         TextView villeTerrain = (TextView) findViewById(R.id.ville_terrain);
 
         nom.setText(evenement.getNom());
         description.setText(evenement.getDescription());
-        Date dateEvenement = evenement.getDate();
+        final Date dateEvenement = evenement.getDate();
         date.setText(dateEvenement.getYear()+"-"+dateEvenement.getMonth()+"-"+dateEvenement.getDate());
         titreTerrain.setText(terrain.getTitre());
         villeTerrain.setText(terrain.getVille());
@@ -81,11 +85,19 @@ public class DetailsEvenement extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean estCoche){
                 if(estCoche){
-
+                    long dateAlarme = 0;
+                    try{
+                        dateAlarme = new SimpleDateFormat("dd/MM/yyyy").parse(
+                                dateEvenement.getDay()+"/"+
+                                dateEvenement.getMonth()+"/"+
+                                dateEvenement.getYear()).getTime();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    evenement.ajouterAlarme(DetailsEvenement.this, dateAlarme);
                 } else{
 
                 }
-                Toast.makeText(DetailsEvenement.this, ""+estCoche, Toast.LENGTH_SHORT).show();
             }
         });
 

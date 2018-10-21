@@ -46,7 +46,9 @@
         <activity android:name=".vue.ListeEvenements" />
         <activity android:name=".vue.DetailsTerrain" />
         <activity android:name=".vue.AjouterEvenement" />
-        <activity android:name=".vue.DetailsEvenement"></activity>
+        <activity android:name=".vue.DetailsEvenement" />
+        <activity android:name=".vue.Alarme"></activity>
+        <receiver android:name=".modele.AlarmeReception"></receiver>
     </application>
 
 </manifest>
