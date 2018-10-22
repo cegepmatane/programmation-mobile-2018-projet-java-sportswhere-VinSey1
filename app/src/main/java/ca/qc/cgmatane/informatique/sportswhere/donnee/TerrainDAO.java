@@ -1,8 +1,5 @@
 package ca.qc.cgmatane.informatique.sportswhere.donnee;
 
-import android.database.Cursor;
-import android.util.Log;
-
 import com.google.android.gms.maps.model.LatLng;
 
 import org.w3c.dom.Document;
@@ -12,7 +9,6 @@ import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringBufferInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +40,7 @@ public class TerrainDAO {
     public TerrainDAO(){
         try {
             accesseurService = new ServiceDAO();
-            xml = accesseurService.execute("http://158.69.192.249/sportswhere/liste_terrain.php", "</terrains>").get();
+            xml = accesseurService.execute("http://158.69.192.249/sportswhere/terrain/liste_terrain.php", "</terrains>").get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -52,7 +48,7 @@ public class TerrainDAO {
         }
 
         try {
-            initialiserDonneesTestTerrains();
+            initialiserTerrains();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -62,7 +58,7 @@ public class TerrainDAO {
         }
     }
 
-    private void initialiserDonneesTestTerrains() throws IOException, SAXException, ParserConfigurationException {
+    private void initialiserTerrains() throws IOException, SAXException, ParserConfigurationException {
         listeTerrains = new ArrayList<Terrain>();
         DocumentBuilder parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = parseur.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
@@ -85,22 +81,6 @@ public class TerrainDAO {
 
             listeTerrains.add(terrain);
         }
-
-        /*
-
-        LatLng position = new LatLng( 48.840897, -67.50821);
-        String titre = "Terrain de la Polyvalente de Matane";
-        String description = "1 terrain en vrai gazon";
-        String ville = "Matane";
-        Terrain terrain = new Terrain(position, titre, description, ville, 0);
-        listeTerrains.add(terrain);
-
-        position = new LatLng(48.840691 ,   -67.497435);
-        titre = "Terrain du CEGEP de Matane";
-        description = "2 terrains en vrai gazon\n1 terrain synthétique";
-        terrain = new Terrain(position, titre, description, ville,1);
-        listeTerrains.add(terrain);
-        */
     }
 
     public Terrain trouverTerrain(String nom){
@@ -130,40 +110,7 @@ public class TerrainDAO {
         return listeTerrains.size();
     }
 
-    public List<Terrain> listerTerrainBD() {
-        /*
-        String LISTER_TERRAINS = "SELECT * FROM terrain";
-        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_TERRAINS,null);
-        this.listeTerrains.clear();
-        Terrain terrain;
-
-        int indexId_Terrain = curseur.getColumnIndex("id_terrain");
-        int indexTitre = curseur.getColumnIndex("titre");
-        int indexVille = curseur.getColumnIndex("ville");
-        int indexDescription = curseur.getColumnIndex("description");
-        int indexImage = curseur.getColumnIndex("image");
-        int indexLatitude = curseur.getColumnIndex("latitude");
-        int indexLongitude = curseur.getColumnIndex("longitude");
-
-
-        for (curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()) {
-            int id_terrain = curseur.getInt(indexId_Terrain);
-            String titre = curseur.getString(indexTitre);
-            String ville = curseur.getString(indexVille);
-            String description = curseur.getString(indexDescription);
-            String image = curseur.getString(indexImage);
-            int latitude = curseur.getInt(indexLatitude);
-            int longitude = curseur.getInt(indexLongitude);
-            LatLng position = new LatLng(latitude, longitude);
-            terrain = new Terrain(position, titre, description, ville, image, id_terrain);
-            this.listeTerrains.add(terrain);
-        }
-
-*/
-        return listeTerrains;
-    }
-
-    public List<Terrain> listerTerrains() {
+    public List<Terrain> getListeTerrains() {
         return listeTerrains;
     }
 }

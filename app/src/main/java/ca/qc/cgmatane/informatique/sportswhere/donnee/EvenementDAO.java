@@ -42,7 +42,7 @@ public class EvenementDAO {
     public EvenementDAO(){
         try {
             accesseurService = new ServiceDAO();
-            xml = accesseurService.execute("http://158.69.192.249/sportswhere/liste_evenements.php", "</evenements>").get();
+            xml = accesseurService.execute("http://158.69.192.249/sportswhere/evenement/liste_evenements.php", "</evenements>").get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

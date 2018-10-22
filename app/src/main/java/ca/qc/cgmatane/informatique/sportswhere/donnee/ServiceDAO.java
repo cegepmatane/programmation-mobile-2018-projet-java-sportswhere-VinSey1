@@ -33,7 +33,7 @@ public class ServiceDAO extends AsyncTask<String, Void, String> {
             Scanner lecteur = new Scanner(flux).useDelimiter(delimiteur);
             xml = lecteur.next() + delimiteur;
         } catch (IOException e) {
-            Log.d("TestOUI", ""+e.getMessage());
+            Log.d("ServiceDAO/IOException", ""+e.getMessage());
         }
         return xml;
     }

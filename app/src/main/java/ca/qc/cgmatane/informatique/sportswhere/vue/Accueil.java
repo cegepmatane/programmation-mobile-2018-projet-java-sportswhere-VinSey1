@@ -59,7 +59,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
         accesseurEvenement = EvenementDAO.getInstance();
         accesseurTerrain = TerrainDAO.getInstance();
 
-        listeTerrains = accesseurTerrain.listerTerrains();
+        listeTerrains = accesseurTerrain.getListeTerrains();
 
         intentionNaviguerListeTerrains = new Intent(this, ListeTerrains.class);
 
