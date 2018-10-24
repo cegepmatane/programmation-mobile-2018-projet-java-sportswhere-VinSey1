@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,8 +32,8 @@ public class AjouterEvenement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ActionBar barreAction = getSupportActionBar();
+        barreAction.hide();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_evenement);
@@ -43,18 +42,18 @@ public class AjouterEvenement extends AppCompatActivity {
         this.accesseurTerrain = TerrainDAO.getInstance();
 
         Bundle parametres = this.getIntent().getExtras();
-        int parametre_terrain = (Integer) parametres.get("terrain");
-        terrain = accesseurTerrain.trouverTerrain(parametre_terrain);
+        int parametreTerrain = (Integer) parametres.get("terrain");
+        terrain = accesseurTerrain.trouverTerrain(parametreTerrain);
 
-        TextView titre = (TextView) findViewById(R.id.titre_terrain);
+        TextView titre = findViewById(R.id.titre_terrain);
 
         titre.setText(terrain.getTitre());
 
-        champNom = (EditText) findViewById(R.id.vue_ajouter_evenement_nom);
-        champDescription = (EditText) findViewById(R.id.vue_ajouter_evenement_description);
-        champDate = (EditText) findViewById(R.id.vue_ajouter_evenement_date);
+        champNom = findViewById(R.id.vue_ajouter_evenement_nom);
+        champDescription = findViewById(R.id.vue_ajouter_evenement_description);
+        champDate = findViewById(R.id.vue_ajouter_evenement_date);
 
-        Button actionEnregisterEvenement = (Button) findViewById(R.id.action_ajouter_evenement);
+        Button actionEnregisterEvenement = findViewById(R.id.action_ajouter_evenement);
 
         actionEnregisterEvenement.setOnClickListener(
             new View.OnClickListener()
@@ -71,7 +70,7 @@ public class AjouterEvenement extends AppCompatActivity {
 
         intentionNaviguerAccueil = new Intent(this, Accueil.class);
 
-        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+        Button actionNaviguerAccueil = findViewById(R.id.action_naviguer_accueil);
 
         actionNaviguerAccueil.setOnClickListener(
                 new View.OnClickListener() {
