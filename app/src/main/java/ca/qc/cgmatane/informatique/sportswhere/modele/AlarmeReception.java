@@ -5,26 +5,23 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
 
-import static android.support.v4.content.ContextCompat.getSystemService;
-
 public class AlarmeReception extends BroadcastReceiver {
 
-    protected Context context;
-    protected Intent intent;
+    protected Context contexte;
+    protected Intent intention;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context contexte, Intent intention) {
 
-        this.context = context;
-        this.intent = intent;
+        this.contexte = contexte;
+        this.intention = intention;
 
-        NotificationManager gestionnaireNotification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager gestionnaireNotification = (NotificationManager) contexte.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("default",
                     "Événements",
@@ -33,11 +30,11 @@ public class AlarmeReception extends BroadcastReceiver {
             gestionnaireNotification.createNotificationChannel(channel);
         }
 
-        Bundle parametres = intent.getExtras();
+        Bundle parametres = intention.getExtras();
         String nom = parametres.get("nom").toString();
         String description = parametres.get("description").toString();
 
-        NotificationCompat.Builder constructeurNotification = new NotificationCompat.Builder(context, "default")
+        NotificationCompat.Builder constructeurNotification = new NotificationCompat.Builder(contexte, "default")
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(nom)
