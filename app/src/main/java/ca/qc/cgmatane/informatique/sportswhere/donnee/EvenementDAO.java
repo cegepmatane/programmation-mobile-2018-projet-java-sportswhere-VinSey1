@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,30 +81,11 @@ public class EvenementDAO {
         }
     }
 
-    public Evenement trouverEvenement(String nom){
-        for(Evenement evenement: this.listeEvenements){
-            if(evenement.getNom() == nom) return evenement;
-        }
-        return null;
-    }
-
     public Evenement trouverEvenement(int id_evenement){
         for(Evenement evenement: this.listeEvenements){
             if(evenement.getId_evenement() == id_evenement) return evenement;
         }
         return null;
-    }
-
-    public List<Evenement> listerEvenements() {
-        return listeEvenements;
-    }
-
-    public List<Evenement> listerEvenementsParTerrain(int id_terrain){
-        List<Evenement> evenementsDuTerrain = new ArrayList<Evenement>();
-        for(Evenement evenement: this.listeEvenements){
-            if(evenement.getTerrain() == id_terrain) evenementsDuTerrain.add(evenement);
-        }
-        return evenementsDuTerrain;
     }
 
     public List<HashMap<String,String>> recupererListeEvenementsPourAdapteur() {
@@ -146,7 +126,7 @@ public class EvenementDAO {
 
             connexion.disconnect();
 
-            initialiserEvenements(); //Trouver une méthode plus pratique ?
+            initialiserEvenements();
 
         } catch (IOException e) {
             e.printStackTrace();
