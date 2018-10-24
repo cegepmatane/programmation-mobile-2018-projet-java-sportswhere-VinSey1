@@ -37,14 +37,14 @@ public class DetailsTerrain extends AppCompatActivity {
     private Intent intentionNaviguerAjouterEvenement;
     private Intent intentionNaviguerAccueil;
     private int nombreTerrains;
-    private ImageView imageView;
-    private ScaleGestureDetector detector;
-    private float scale = 1f;
+    private ImageView vueImage;
+    private ScaleGestureDetector detecteur;
+    private float echelle = 1f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ActionBar barreAction = getSupportActionBar();
+        barreAction.hide();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_details_terrain);
@@ -52,19 +52,19 @@ public class DetailsTerrain extends AppCompatActivity {
         this.accesseurEvenement = EvenementDAO.getInstance();
         this.accesseurTerrain = TerrainDAO.getInstance();
 
-        vueListeEvenements = (ListView) findViewById(R.id.vue_liste_evenements);
+        vueListeEvenements = findViewById(R.id.vue_liste_evenements);
 
         Bundle parametres = this.getIntent().getExtras();
-        String parametre_id_terrain = (String) parametres.get("id_terrain");
-        int id_terrain = Integer.parseInt(parametre_id_terrain);
+        String parametreIdTerrain = (String) parametres.get("id_terrain");
+        int idTerrain = Integer.parseInt(parametreIdTerrain);
         nombreTerrains = accesseurTerrain.getNombreTerrains();
-        terrain = accesseurTerrain.trouverTerrain(id_terrain);
+        terrain = accesseurTerrain.trouverTerrain(idTerrain);
 
         afficherTousLesEvenements();
 
         intentionNaviguerAjouterEvenement = new Intent(this, AjouterEvenement.class);
 
-        Button actionNaviguerAjouterEvenement = (Button) findViewById(R.id.action_naviguer_ajouter_evenement);
+        Button actionNaviguerAjouterEvenement = findViewById(R.id.action_naviguer_ajouter_evenement);
 
         actionNaviguerAjouterEvenement.setOnClickListener(
                 new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
         intentionNaviguerAccueil = new Intent(this, Accueil.class);
 
-        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+        Button actionNaviguerAccueil = findViewById(R.id.action_naviguer_accueil);
 
         actionNaviguerAccueil.setOnClickListener(
                 new View.OnClickListener() {
@@ -87,7 +87,7 @@ public class DetailsTerrain extends AppCompatActivity {
                 }
         );
       
-        TextView titre = (TextView) findViewById(R.id.titre_terrain);
+        TextView titre = findViewById(R.id.titre_terrain);
 
         titre.setText(terrain.getTitre());
 
@@ -113,8 +113,8 @@ public class DetailsTerrain extends AppCompatActivity {
                 }
         );
 
-        View myView = findViewById(R.id.fenetre_details_terrain);
-        myView.setOnTouchListener(new EcouteurSurBalayement(DetailsTerrain.this) {
+        View vue = findViewById(R.id.fenetre_details_terrain);
+        vue.setOnTouchListener(new EcouteurSurBalayement(DetailsTerrain.this) {
             public void balayageHaut() {}
             public void balayageGauche() {
 
@@ -148,52 +148,48 @@ public class DetailsTerrain extends AppCompatActivity {
 
         });
 
-        imageView=(ImageView)findViewById(R.id.imageView);
-        detector = new ScaleGestureDetector(this,new ScaleListener());
+        vueImage = findViewById(R.id.imageView);
+        detecteur = new ScaleGestureDetector(this,new EcouteEchelle());
 
 
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent evenement) {
 
-        detector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+        detecteur.onTouchEvent(evenement);
+        return super.onTouchEvent(evenement);
     }
 
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+    private class EcouteEchelle extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 
 
-        float onScaleBegin = 1f;
-        float onScaleEnd = 1f;
+        float debutEchelle = 1f;
+        float finEchelle = 1f;
 
         @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            scale *= detector.getScaleFactor();
-            imageView.setScaleX(scale);
-            imageView.setScaleY(scale);
+        public boolean onScale(ScaleGestureDetector detecteur) {
+            echelle *= detecteur.getScaleFactor();
+            vueImage.setScaleX(echelle);
+            vueImage.setScaleY(echelle);
             return true;
         }
 
         @Override
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
+        public boolean onScaleBegin(ScaleGestureDetector detecteur) {
 
-            imageView.setScaleX(onScaleBegin);
-            imageView.setScaleY(onScaleBegin);
-
+            vueImage.setScaleX(debutEchelle);
+            vueImage.setScaleY(debutEchelle);
 
             return true;
         }
 
         @Override
-        public void onScaleEnd(ScaleGestureDetector detector) {
+        public void onScaleEnd(ScaleGestureDetector detecteur) {
 
-            imageView.setScaleX(onScaleEnd);
-            imageView.setScaleY(onScaleEnd);
+            vueImage.setScaleX(finEchelle);
+            vueImage.setScaleY(finEchelle);
 
-
-
-
-            super.onScaleEnd(detector);
+            super.onScaleEnd(detecteur);
         }
     }
 
