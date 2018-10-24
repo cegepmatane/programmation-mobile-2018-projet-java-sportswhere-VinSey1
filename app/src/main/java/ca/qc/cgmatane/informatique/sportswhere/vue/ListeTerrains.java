@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,25 +26,24 @@ public class ListeTerrains extends AppCompatActivity {
     protected ListView vueListeTerrains;
     private Intent intentionNaviguerListeEvenements;
     private Intent intentionNaviguerAccueil;
-    private int nombreTerrains;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ActionBar barreAction = getSupportActionBar();
+        barreAction.hide();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_terrains);
 
         accesseurTerrain = TerrainDAO.getInstance();
 
-        vueListeTerrains = (ListView) findViewById(R.id.vue_liste_terrains);
+        vueListeTerrains = findViewById(R.id.vue_liste_terrains);
 
         afficherTousLesTerrains();
 
         intentionNaviguerListeEvenements = new Intent(this, ListeEvenements.class);
 
-        Button actionNaviguerListeEvenements = (Button) findViewById(R.id.action_naviguer_liste_evenements);
+        Button actionNaviguerListeEvenements = findViewById(R.id.action_naviguer_liste_evenements);
 
         actionNaviguerListeEvenements.setOnClickListener(
                 new View.OnClickListener() {
@@ -58,7 +56,7 @@ public class ListeTerrains extends AppCompatActivity {
 
         intentionNaviguerAccueil = new Intent(this, Accueil.class);
 
-        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+        Button actionNaviguerAccueil = findViewById(R.id.action_naviguer_accueil);
 
         actionNaviguerAccueil.setOnClickListener(
                 new View.OnClickListener() {
