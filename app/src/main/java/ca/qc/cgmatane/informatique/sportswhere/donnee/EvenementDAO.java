@@ -1,7 +1,5 @@
 package ca.qc.cgmatane.informatique.sportswhere.donnee;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -9,9 +7,12 @@ import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +23,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import ca.qc.cgmatane.informatique.sportswhere.modele.Evenement;
-import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
 public class EvenementDAO {
 
@@ -50,7 +50,7 @@ public class EvenementDAO {
         }
 
         try {
-            initialiserDonneesTestEvenements();
+            initialiserEvenements();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -60,54 +60,26 @@ public class EvenementDAO {
         }
     }
 
-    private void initialiserDonneesTestEvenements() throws ParserConfigurationException, IOException, SAXException {
+    private void initialiserEvenements() throws ParserConfigurationException, IOException, SAXException {
 
         listeEvenements = new ArrayList<Evenement>();
         DocumentBuilder parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = parseur.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-        NodeList listeNoeudAnnonces = document.getElementsByTagName("evenement");
+        NodeList listeNoeudEvenements = document.getElementsByTagName("evenement");
 
-        for (int iterateur = 0; iterateur < listeNoeudAnnonces.getLength(); iterateur++) {
-            Element noeudAnnonce = (Element) listeNoeudAnnonces.item(iterateur);
+        for (int iterateur = 0; iterateur < listeNoeudEvenements.getLength(); iterateur++) {
+            Element noeudEvenement = (Element) listeNoeudEvenements.item(iterateur);
 
-            int id = Integer.parseInt(noeudAnnonce.getElementsByTagName("id_evenement").item(0).getTextContent());
-            String nom = noeudAnnonce.getElementsByTagName("nom").item(0).getTextContent();
-            String description = noeudAnnonce.getElementsByTagName("description").item(0).getTextContent();
-            Long date  = Long.parseLong(noeudAnnonce.getElementsByTagName("date").item(0).getTextContent());
-            int terrain = Integer.parseInt(noeudAnnonce.getElementsByTagName("terrain").item(0).getTextContent());
+            int id = Integer.parseInt(noeudEvenement.getElementsByTagName("id_evenement").item(0).getTextContent());
+            String nom = noeudEvenement.getElementsByTagName("nom").item(0).getTextContent();
+            String description = noeudEvenement.getElementsByTagName("description").item(0).getTextContent();
+            Long date  = Long.parseLong(noeudEvenement.getElementsByTagName("date").item(0).getTextContent());
+            int terrain = Integer.parseInt(noeudEvenement.getElementsByTagName("terrain").item(0).getTextContent());
 
             Evenement evenement = new Evenement(date, nom, description, terrain, id);
 
             listeEvenements.add(evenement);
         }
-        /*
-        listeEvenements = new ArrayList<Evenement>();
-
-        Date date = new Date(2018, 10, 2);
-        String nom = "Match de soccer";
-        String description = "Match entre les Capitaines et Rimouski";
-        Evenement evenement = new Evenement(date, nom, description, 0, 1);
-        listeEvenements.add(evenement);
-
-        date = new Date(2018, 10, 1);
-        nom = "Match de football";
-        description = "Match entre les Capitaines et la Polyvalence";
-        evenement = new Evenement(date, nom, description, 1, 2);
-        listeEvenements.add(evenement);
-
-        date = new Date(2018, 11, 5);
-        nom = "Séance de cinéma";
-        description = "Rediffusion de 'Histoire de jouets'";
-        evenement = new Evenement(date, nom, description, 0, 3);
-        listeEvenements.add(evenement);
-
-        date = new Date(2020, 01, 7);
-        nom = "Concert";
-        description = "Concert de l'incroyable F. Levy";
-        evenement = new Evenement(date, nom, description, 1, 4);
-        listeEvenements.add(evenement);
-        */
-
     }
 
     public Evenement trouverEvenement(String nom){
@@ -154,7 +126,39 @@ public class EvenementDAO {
     }
 
     public void ajouterEvenement(Evenement evenement) {
-        listeEvenements.add(evenement);
+        try {
+            URL urlAjouterEvenement = new URL("http://158.69.192.249/sportswhere/evenement/ajouter.php");
+            HttpURLConnection connexion = (HttpURLConnection) urlAjouterEvenement.openConnection();
+            connexion.setDoOutput(true);
+            connexion.setRequestMethod("POST");
+
+            OutputStreamWriter envoyeur = new ServiceEnvoyerDAO().execute(connexion).get();
+
+            envoyeur.write("nom=" + evenement.getNom()
+                    +"&description=" + evenement.getDescription()
+                    +"&date=" + evenement.getDate()
+                    +"&terrain=" + evenement.getTerrain()
+            );
+
+            envoyeur.close();
+
+            InputStream fluxLecture = new ServiceFluxDAO().execute(connexion).get();
+
+            connexion.disconnect();
+
+            initialiserEvenements(); //Trouver une méthode plus pratique ?
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
     }
 
     public void supprimerEvenement(int id_evenement) {

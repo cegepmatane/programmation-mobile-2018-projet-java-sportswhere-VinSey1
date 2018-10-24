@@ -62,18 +62,18 @@ public class TerrainDAO {
         listeTerrains = new ArrayList<Terrain>();
         DocumentBuilder parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = parseur.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-        NodeList listeNoeudAnnonces = document.getElementsByTagName("terrain");
+        NodeList listeNoeudsTerrains = document.getElementsByTagName("terrain");
 
-        for (int iterateur = 0; iterateur < listeNoeudAnnonces.getLength(); iterateur++) {
-            Element noeudAnnonce = (Element) listeNoeudAnnonces.item(iterateur);
+        for (int iterateur = 0; iterateur < listeNoeudsTerrains.getLength(); iterateur++) {
+            Element noeudTerrain = (Element) listeNoeudsTerrains.item(iterateur);
 
-            int id = Integer.parseInt(noeudAnnonce.getElementsByTagName("id_terrain").item(0).getTextContent());
-            String nom = noeudAnnonce.getElementsByTagName("nom").item(0).getTextContent();
-            String ville = noeudAnnonce.getElementsByTagName("ville").item(0).getTextContent();
-            String description = noeudAnnonce.getElementsByTagName("description").item(0).getTextContent();
-            String images = noeudAnnonce.getElementsByTagName("images").item(0).getTextContent();
-            Float latitude = Float.parseFloat(noeudAnnonce.getElementsByTagName("latitude").item(0).getTextContent());
-            Float longitude = Float.parseFloat(noeudAnnonce.getElementsByTagName("longitude").item(0).getTextContent());
+            int id = Integer.parseInt(noeudTerrain.getElementsByTagName("id_terrain").item(0).getTextContent());
+            String nom = noeudTerrain.getElementsByTagName("nom").item(0).getTextContent();
+            String ville = noeudTerrain.getElementsByTagName("ville").item(0).getTextContent();
+            String description = noeudTerrain.getElementsByTagName("description").item(0).getTextContent();
+            String images = noeudTerrain.getElementsByTagName("images").item(0).getTextContent();
+            Float latitude = Float.parseFloat(noeudTerrain.getElementsByTagName("latitude").item(0).getTextContent());
+            Float longitude = Float.parseFloat(noeudTerrain.getElementsByTagName("longitude").item(0).getTextContent());
 
             LatLng position = new LatLng(latitude, longitude);
 
