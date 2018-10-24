@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -34,6 +37,9 @@ public class DetailsTerrain extends AppCompatActivity {
     private Intent intentionNaviguerAjouterEvenement;
     private Intent intentionNaviguerAccueil;
     private int nombreTerrains;
+    private ImageView imageView;
+    private ScaleGestureDetector detector;
+    private float scale = 1f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +147,54 @@ public class DetailsTerrain extends AppCompatActivity {
             public void balayageBas() {}
 
         });
+
+        imageView=(ImageView)findViewById(R.id.imageView);
+        detector = new ScaleGestureDetector(this,new ScaleListener());
+
+
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+
+        detector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+
+
+        float onScaleBegin = 1f;
+        float onScaleEnd = 1f;
+
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scale *= detector.getScaleFactor();
+            imageView.setScaleX(scale);
+            imageView.setScaleY(scale);
+            return true;
+        }
+
+        @Override
+        public boolean onScaleBegin(ScaleGestureDetector detector) {
+
+            imageView.setScaleX(onScaleBegin);
+            imageView.setScaleY(onScaleBegin);
+
+
+            return true;
+        }
+
+        @Override
+        public void onScaleEnd(ScaleGestureDetector detector) {
+
+            imageView.setScaleX(onScaleEnd);
+            imageView.setScaleY(onScaleEnd);
+
+
+
+
+            super.onScaleEnd(detector);
+        }
     }
 
     private void afficherTousLesEvenements(){
