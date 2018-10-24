@@ -1,10 +1,19 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.StrictMode;
+import android.location.Location;
+
+import android.os.Build;
+import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -27,7 +41,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
-import ca.qc.cgmatane.informatique.sportswhere.donnee.EvenementDAO;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.TerrainDAO;
 import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
@@ -39,24 +52,30 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap carteTerrains;
     private TerrainDAO accesseurTerrain;
-    private EvenementDAO accesseurEvenement;
     private List<Terrain> listeTerrains;
     private Intent intentionNaviguerListeTerrains;
     private Intent intentionNaviguerListeEvenements;
     private Intent intentionNaviguerDetailsTerrain;
 
+    LocationRequest requeteLocation;
+    Location derniereLocation;
+    Marker marqueurDerniereLocation;
+
+    private FusedLocationProviderClient gestionnaireLocalisation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ActionBar barreAction = getSupportActionBar();
+        barreAction.hide();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_accueil);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.carte_terrains);
-        mapFragment.getMapAsync(this);
+        gestionnaireLocalisation = LocationServices.getFusedLocationProviderClient(this);
 
-        accesseurEvenement = EvenementDAO.getInstance();
+        MapFragment fragementCarte = (MapFragment) getFragmentManager().findFragmentById(R.id.carte_terrains);
+        fragementCarte.getMapAsync(this);
+
         accesseurTerrain = TerrainDAO.getInstance();
 
         listeTerrains = accesseurTerrain.getListeTerrains();
@@ -87,13 +106,19 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        carteTerrains = googleMap;
-        float zoom = 13.0f;
-        /*carteTerrains.animateCamera(CameraUpdateFactory.zoomTo(13), 10, null);*/
-        LatLng emplacementDeBase = new LatLng( 48.8526, -67.518);
-        carteTerrains.moveCamera(CameraUpdateFactory.newLatLngZoom(emplacementDeBase, zoom));
+    public void onPause() {
+        super.onPause();
 
+
+        if (gestionnaireLocalisation != null) {
+            gestionnaireLocalisation.removeLocationUpdates(rappelLocation);
+        }
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap carte) {
+        carteTerrains = carte;
         for(Terrain terrain : this.listeTerrains){
             carteTerrains.addMarker(new MarkerOptions().position(terrain.getPosition()).title(terrain.getTitre()).snippet(terrain.getDescription()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
@@ -115,27 +140,122 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
             }
 
             @Override
-            public View getInfoContents(Marker marker) {
+            public View getInfoContents(Marker marqueur) {
 
-                Context mContext = getApplicationContext();
-                LinearLayout info = new LinearLayout(mContext);
-                info.setOrientation(LinearLayout.VERTICAL);
+                Context contexte = getApplicationContext();
+                LinearLayout information = new LinearLayout(contexte);
+                information.setOrientation(LinearLayout.VERTICAL);
 
-                TextView title = new TextView(mContext);
-                title.setTextColor(Color.BLACK);
-                title.setGravity(Gravity.CENTER);
-                title.setTypeface(null, Typeface.BOLD);
-                title.setText(marker.getTitle());
+                TextView titre = new TextView(contexte);
+                titre.setTextColor(Color.BLACK);
+                titre.setGravity(Gravity.CENTER);
+                titre.setTypeface(null, Typeface.BOLD);
+                titre.setText(marqueur.getTitle());
 
-                TextView snippet = new TextView(mContext);
-                snippet.setTextColor(Color.GRAY);
-                snippet.setText(marker.getSnippet());
+                TextView description = new TextView(contexte);
+                description.setTextColor(Color.GRAY);
+                description.setText(marqueur.getSnippet());
 
-                info.addView(title);
-                info.addView(snippet);
+                information.addView(titre);
+                information.addView(description);
 
-                return info;
+                return information;
             }
         });
+
+        requeteLocation = new LocationRequest();
+        requeteLocation.setInterval(120000); // two minute interval
+        requeteLocation.setFastestInterval(120000);
+        requeteLocation.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+                gestionnaireLocalisation.requestLocationUpdates(requeteLocation, rappelLocation, Looper.myLooper());
+                carteTerrains.setMyLocationEnabled(true);
+            } else {
+                checkLocationPermission();
+            }
+        }
+        else {
+            gestionnaireLocalisation.requestLocationUpdates(requeteLocation, rappelLocation, Looper.myLooper());
+            carteTerrains.setMyLocationEnabled(true);
+        }
+    }
+
+    LocationCallback rappelLocation = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult resultatLocation) {
+            List<Location> listeLocation = resultatLocation.getLocations();
+            if (listeLocation.size() > 0) {
+
+                Location location = listeLocation.get(listeLocation.size() - 1);
+
+                derniereLocation = location;
+                if (marqueurDerniereLocation != null) {
+                    marqueurDerniereLocation.remove();
+                }
+
+                LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+
+                carteTerrains.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
+            }
+        }
+    };
+
+    public static final int PERMISSIONS_REQUETE_LOCATION = 99;
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Permissions de location nécessaires")
+                        .setMessage("Cette application nécessite d'accéder à votre localisation pour son fonctionnement")
+                        .setPositiveButton("Désolé", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface interfaceDialogue, int i) {
+
+                                ActivityCompat.requestPermissions(Accueil.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        PERMISSIONS_REQUETE_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        PERMISSIONS_REQUETE_LOCATION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int codeDeRequete,
+                                           String permissions[], int[] resultats) {
+        switch (codeDeRequete) {
+            case PERMISSIONS_REQUETE_LOCATION: {
+                if (resultats.length > 0
+                        && resultats[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        gestionnaireLocalisation.requestLocationUpdates(requeteLocation, rappelLocation, Looper.myLooper());
+                        carteTerrains.setMyLocationEnabled(true);
+                    }
+                } else {
+                    Toast.makeText(this, "Permission refusée", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 }
