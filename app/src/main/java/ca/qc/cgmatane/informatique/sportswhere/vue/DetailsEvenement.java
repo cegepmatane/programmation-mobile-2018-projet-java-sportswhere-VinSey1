@@ -12,12 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
@@ -30,18 +25,17 @@ public class DetailsEvenement extends AppCompatActivity {
 
     static final public int ACTIVITE_DETAILS_TERRAIN = 3;
 
-    EvenementDAO accesseurEvenement;
-    TerrainDAO accesseurTerrain;
-    Evenement evenement;
-    Terrain terrain;
-    Intent intentionNaviguerDetailsTerrain;
+    private EvenementDAO accesseurEvenement;
+    private TerrainDAO accesseurTerrain;
+    private Evenement evenement;
+    private Terrain terrain;
+    private Intent intentionNaviguerDetailsTerrain;
     private Intent intentionNaviguerAccueil;
-    Activity activite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ActionBar barreAction = getSupportActionBar();
+        barreAction.hide();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_details_evenement);
@@ -50,26 +44,25 @@ public class DetailsEvenement extends AppCompatActivity {
         this.accesseurTerrain = TerrainDAO.getInstance();
 
         Bundle parametres = this.getIntent().getExtras();
-        String parametre_id_evenement = (String) parametres.get("id_evenement");
-        int id_evenement = Integer.parseInt(parametre_id_evenement);
+        String parametreIdEvenement = (String) parametres.get("id_evenement");
+        int idEvenement = Integer.parseInt(parametreIdEvenement);
 
-        evenement = accesseurEvenement.trouverEvenement(id_evenement);
+        evenement = accesseurEvenement.trouverEvenement(idEvenement);
         terrain = accesseurTerrain.trouverTerrain(evenement.getTerrain());
 
-        TextView nom = (TextView) findViewById(R.id.nom_evenement);
-        TextView description = (TextView) findViewById(R.id.description_evenement);
-        final TextView date = (TextView) findViewById(R.id.date_evenement);
-        TextView titreTerrain = (TextView) findViewById(R.id.titre_terrain);
-        TextView villeTerrain = (TextView) findViewById(R.id.ville_terrain);
+        TextView nom = findViewById(R.id.nom_evenement);
+        TextView description = findViewById(R.id.description_evenement);
+        final TextView date = findViewById(R.id.date_evenement);
+        TextView titreTerrain = findViewById(R.id.titre_terrain);
+        TextView villeTerrain = findViewById(R.id.ville_terrain);
 
         nom.setText(evenement.getNom());
         description.setText(evenement.getDescription());
-        final Date dateEvenement = new Date(evenement.getDate());
         date.setText(evenement.getDateTexte());
         titreTerrain.setText(terrain.getTitre());
         villeTerrain.setText(terrain.getVille());
 
-        Button actionNaviguerDetailsTerrain = (Button) findViewById(R.id.action_naviguer_details_terrain);
+        Button actionNaviguerDetailsTerrain = findViewById(R.id.action_naviguer_details_terrain);
 
         intentionNaviguerDetailsTerrain = new Intent(this, DetailsTerrain.class);
 
@@ -82,7 +75,7 @@ public class DetailsEvenement extends AppCompatActivity {
             }
         );
 
-        final CheckBox estInteresse = ( CheckBox ) findViewById( R.id.action_est_interesse );
+        final CheckBox estInteresse = findViewById( R.id.action_est_interesse );
         estInteresse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean estCoche){
@@ -102,7 +95,6 @@ public class DetailsEvenement extends AppCompatActivity {
 
                     if (estInteresse.isChecked()==false) {
                         estInteresse.setChecked(true);
-                        //enregistrerInteret("true");
                     }
                     else {
                         estInteresse.setChecked(false);
@@ -121,7 +113,7 @@ public class DetailsEvenement extends AppCompatActivity {
             }
         });
 
-        Button actionSupprimerEvenement = (Button) findViewById(R.id.action_supprimer_evenement);
+        Button actionSupprimerEvenement = findViewById(R.id.action_supprimer_evenement);
 
         actionSupprimerEvenement.setOnClickListener(
             new View.OnClickListener() {
@@ -132,10 +124,9 @@ public class DetailsEvenement extends AppCompatActivity {
             }
         );
 
-
         intentionNaviguerAccueil = new Intent(this, Accueil.class);
 
-        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+        Button actionNaviguerAccueil= findViewById(R.id.action_naviguer_accueil);
 
         actionNaviguerAccueil.setOnClickListener(
                 new View.OnClickListener() {

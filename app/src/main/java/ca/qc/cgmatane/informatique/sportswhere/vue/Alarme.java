@@ -32,7 +32,7 @@ public class Alarme extends AppCompatActivity {
         PendingIntent attenteIntentionLancerAlarme = PendingIntent.getBroadcast(this, 0, intententionLancerAlarme, 0);
 
         AlarmManager gestionnaireAlarme = (AlarmManager) getSystemService(ALARM_SERVICE);
-        
+
         gestionnaireAlarme.set(AlarmManager.RTC_WAKEUP, tempsAlarme, attenteIntentionLancerAlarme);
 
         Toast.makeText(this, "Alarme prévue pour le " + new SimpleDateFormat("dd/MM/yyyy").format(tempsAlarme),Toast.LENGTH_LONG).show();

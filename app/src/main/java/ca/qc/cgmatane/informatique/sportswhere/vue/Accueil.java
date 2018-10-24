@@ -57,9 +57,9 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
     private Intent intentionNaviguerListeEvenements;
     private Intent intentionNaviguerDetailsTerrain;
 
-    LocationRequest requeteLocation;
-    Location derniereLocation;
-    Marker marqueurDerniereLocation;
+    private LocationRequest requeteLocation;
+    private Location derniereLocation;
+    private Marker marqueurDerniereLocation;
 
     private FusedLocationProviderClient gestionnaireLocalisation;
 
@@ -185,7 +185,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
-    LocationCallback rappelLocation = new LocationCallback() {
+    private LocationCallback rappelLocation = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult resultatLocation) {
             List<Location> listeLocation = resultatLocation.getLocations();
