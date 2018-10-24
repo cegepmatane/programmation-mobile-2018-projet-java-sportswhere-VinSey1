@@ -20,8 +20,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
 
-import static java.lang.Thread.sleep;
-
 public class TerrainDAO {
 
     private static TerrainDAO instance = null;
@@ -90,9 +88,9 @@ public class TerrainDAO {
         return null;
     }
 
-    public Terrain trouverTerrain(int id_terrain){
+    public Terrain trouverTerrain(int idTerrain){
         for(Terrain terrain: this.listeTerrains){
-            if(terrain.getId_terrain() == id_terrain) return terrain;
+            if(terrain.getId_terrain() == idTerrain) return terrain;
         }
         return null;
     }

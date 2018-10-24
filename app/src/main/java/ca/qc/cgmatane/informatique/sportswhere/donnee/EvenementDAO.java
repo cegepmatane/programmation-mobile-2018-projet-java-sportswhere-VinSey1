@@ -81,9 +81,9 @@ public class EvenementDAO {
         }
     }
 
-    public Evenement trouverEvenement(int id_evenement){
+    public Evenement trouverEvenement(int idEvenement){
         for(Evenement evenement: this.listeEvenements){
-            if(evenement.getId_evenement() == id_evenement) return evenement;
+            if(evenement.getId_evenement() == idEvenement) return evenement;
         }
         return null;
     }
@@ -141,10 +141,10 @@ public class EvenementDAO {
         }
     }
 
-    public void supprimerEvenement(int id_evenement) {
+    public void supprimerEvenement(int idEvenement) {
         for (Iterator<Evenement> iterateur = listeEvenements.iterator(); iterateur.hasNext(); ) {
             Evenement evenement = iterateur.next();
-            if (evenement.getId_evenement() == id_evenement) {
+            if (evenement.getId_evenement() == idEvenement) {
                 iterateur.remove();
             }
         }
