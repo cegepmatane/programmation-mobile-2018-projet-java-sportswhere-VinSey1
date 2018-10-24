@@ -12,7 +12,7 @@ public class EcouteurSurBalayement implements OnTouchListener {
     private final GestureDetector detecteurDeGeste;
 
     public EcouteurSurBalayement(Context contexte){
-        detecteurDeGeste = new GestureDetector(contexte, new GestureListener());
+        detecteurDeGeste = new GestureDetector(contexte, new EcouteurGeste());
     }
 
     @Override
@@ -20,7 +20,7 @@ public class EcouteurSurBalayement implements OnTouchListener {
         return detecteurDeGeste.onTouchEvent(evenement);
     }
 
-    private final class GestureListener extends SimpleOnGestureListener {
+    private final class EcouteurGeste extends SimpleOnGestureListener {
 
         private static final int SEUIL_BALAYAGE = 100;
         private static final int SEUIL_VITESSE_BALAYAGE = 100;
