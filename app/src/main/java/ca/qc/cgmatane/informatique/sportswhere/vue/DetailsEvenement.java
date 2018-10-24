@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -80,7 +82,7 @@ public class DetailsEvenement extends AppCompatActivity {
             }
         );
 
-        CheckBox estInteresse = ( CheckBox ) findViewById( R.id.action_est_interesse );
+        final CheckBox estInteresse = ( CheckBox ) findViewById( R.id.action_est_interesse );
         estInteresse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean estCoche){
@@ -90,6 +92,32 @@ public class DetailsEvenement extends AppCompatActivity {
                 } else{
 
                 }
+            }
+        });
+
+        findViewById(R.id.fenetre_details_evenement).setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(DetailsEvenement.this, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+
+                    if (estInteresse.isChecked()==false) {
+                        estInteresse.setChecked(true);
+                        //enregistrerInteret("true");
+                    }
+                    else {
+                        estInteresse.setChecked(false);
+                    }
+
+                    return super.onDoubleTap(e);
+                }
+
+            });
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                gestureDetector.onTouchEvent(event);
+                return true;
             }
         });
 
