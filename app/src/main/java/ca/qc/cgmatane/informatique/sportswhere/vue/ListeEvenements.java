@@ -30,21 +30,21 @@ public class ListeEvenements extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ActionBar barreAction = getSupportActionBar();
+        barreAction.hide();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_evenements);
 
         accesseurEvenement = EvenementDAO.getInstance();
 
-        vueListeEvenements = (ListView) findViewById(R.id.vue_liste_evenements);
+        vueListeEvenements = findViewById(R.id.vue_liste_evenements);
 
         afficherTousLesEvenements();
 
         intentionNaviguerAccueil = new Intent(this, Accueil.class);
 
-        Button actionNaviguerAccueil= (Button) findViewById(R.id.action_naviguer_accueil);
+        Button actionNaviguerAccueil= findViewById(R.id.action_naviguer_accueil);
 
         actionNaviguerAccueil.setOnClickListener(
                 new View.OnClickListener() {
@@ -56,7 +56,7 @@ public class ListeEvenements extends AppCompatActivity {
 
         intentionNaviguerListeTerrains = new Intent(this, ListeTerrains.class);
 
-        Button actionNaviguerListeTerrains = (Button) findViewById(R.id.action_naviguer_liste_terrains);
+        Button actionNaviguerListeTerrains = findViewById(R.id.action_naviguer_liste_terrains);
 
         actionNaviguerListeTerrains.setOnClickListener(
                 new View.OnClickListener() {
