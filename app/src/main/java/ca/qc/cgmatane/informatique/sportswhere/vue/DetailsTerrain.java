@@ -1,10 +1,13 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -15,6 +18,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import org.apache.http.params.HttpParams;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -232,6 +239,51 @@ public class DetailsTerrain extends AppCompatActivity {
             case ACTIVITE_DETAILS_EVENEMENT:
                 afficherTousLesEvenements();
                 break;
+
+            case APPAREIL_PHOTO:
+                Bitmap bit = (Bitmap) donnees.getExtras().get("donnees");
+
         }
+    }
+
+    private class TransfererImage extends AsyncTask<Void,Void,Void> {
+
+        Bitmap image;
+        String nom;
+        String URLServer = "";
+        public TransfererImage(Bitmap image, String nom){
+            this.image = image;
+            this.nom = nom;
+        }
+
+        protected Void doInBackground(Void... params){
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            String imageEncodee  = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+
+            ArrayList<NameValuePair> fichierAEnvoyer = new ArrayList<>();
+            fichierAEnvoyer.add(new BasicNameValuePair("image", imageEncodee));
+            fichierAEnvoyer.add (new BasicNameValuePair("nom", nom));
+
+            HttpParams httpRequestParams = getHttpRequestParams();
+
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(URLServer);
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(fichierAEnvoyer));
+                client.execute(post);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void aVoid){
+            super.onPostExecute(aVoid);
+        }
+
     }
 }
