@@ -81,7 +81,7 @@ public class ListeEvenements extends AppCompatActivity {
 
                         Intent intentionNaviguerDetailsEvenement = new Intent (ListeEvenements.this, DetailsEvenement.class);
 
-                        intentionNaviguerDetailsEvenement.putExtra("id_evenement", evenement.get("id_evenement"));
+                        intentionNaviguerDetailsEvenement.putExtra("idEvenement", evenement.get("idEvenement"));
 
                         startActivityForResult(intentionNaviguerDetailsEvenement, ACTIVITE_DETAILS_EVENEMENT);
                     }

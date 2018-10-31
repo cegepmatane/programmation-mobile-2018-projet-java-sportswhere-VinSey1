@@ -1,6 +1,5 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +11,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-
-import java.util.Date;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.EvenementDAO;
@@ -44,7 +41,7 @@ public class DetailsEvenement extends AppCompatActivity {
         this.accesseurTerrain = TerrainDAO.getInstance();
 
         Bundle parametres = this.getIntent().getExtras();
-        String parametreIdEvenement = (String) parametres.get("id_evenement");
+        String parametreIdEvenement = (String) parametres.get("idEvenement");
         int idEvenement = Integer.parseInt(parametreIdEvenement);
 
         evenement = accesseurEvenement.trouverEvenement(idEvenement);
@@ -119,7 +116,7 @@ public class DetailsEvenement extends AppCompatActivity {
             new View.OnClickListener() {
                 public void onClick(View arg0) {
                     naviguerPrecedenteVue();
-                    accesseurEvenement.supprimerEvenement(evenement.getId_evenement());
+                    accesseurEvenement.supprimerEvenement(evenement.getIdEvenement());
                 }
             }
         );

@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 import ca.qc.cgmatane.informatique.sportswhere.vue.Alarme;
-import ca.qc.cgmatane.informatique.sportswhere.vue.DetailsEvenement;
 
 public class Evenement extends AppCompatActivity {
 
@@ -19,7 +16,7 @@ public class Evenement extends AppCompatActivity {
     protected String nom;
     protected String description;
     protected int terrain;
-    protected int id_evenement;
+    protected int idEvenement;
     protected static final int ACTIVITE_AJOUTER_ALARME = 6;
 
 
@@ -30,12 +27,12 @@ public class Evenement extends AppCompatActivity {
         this.terrain = terrain;
     }
 
-    public Evenement(Long date, String nom, String description, int terrain, int id_evenement){
+    public Evenement(Long date, String nom, String description, int terrain, int idEvenement){
         this.date = date;
         this.nom = nom;
         this.description = description;
         this.terrain = terrain;
-        this.id_evenement = id_evenement;
+        this.idEvenement = idEvenement;
     }
 
     public Long getDate(){
@@ -58,8 +55,8 @@ public class Evenement extends AppCompatActivity {
         return terrain;
     }
 
-    public int getId_evenement(){
-        return id_evenement;
+    public int getIdEvenement(){
+        return idEvenement;
     }
 
     public void setDate(Long date){
@@ -78,16 +75,12 @@ public class Evenement extends AppCompatActivity {
         this.terrain = terrain;
     }
 
-    public void setId_evenement(int id_evenement){
-        this.id_evenement = id_evenement;
-    }
-
     public HashMap<String,String> obtenirEvenementPourAdapteur() {
         HashMap<String, String> evenementPourAdapteur = new HashMap<String, String>();
         evenementPourAdapteur.put("nom", this.nom);
         evenementPourAdapteur.put("date", ""+this.getDateTexte());
         evenementPourAdapteur.put("terrain", ""+this.terrain);
-        evenementPourAdapteur.put("id_evenement", ""+this.id_evenement);
+        evenementPourAdapteur.put("idEvenement", ""+this.idEvenement);
         return evenementPourAdapteur;
     }
 
