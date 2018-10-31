@@ -1,6 +1,7 @@
 package ca.qc.cgmatane.informatique.sportswhere.vue;
 
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class DetailsTerrain extends AppCompatActivity {
     private ImageView vueImage;
     private ScaleGestureDetector detecteur;
     private float echelle = 1f;
+    private final static int APPAREIL_PHOTO = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,19 @@ public class DetailsTerrain extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_details_terrain);
+
+        Button prendrePhoto = findViewById(R.id.action_modifier_image);
+
+        prendrePhoto.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        Intent intentionPrendrePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if(intentionPrendrePhoto.resolveActivity(getPackageManager()) != null){
+                            startActivityForResult(intentionPrendrePhoto, APPAREIL_PHOTO);
+                        }
+                    }
+                }
+        );
 
         this.accesseurEvenement = EvenementDAO.getInstance();
         this.accesseurTerrain = TerrainDAO.getInstance();
