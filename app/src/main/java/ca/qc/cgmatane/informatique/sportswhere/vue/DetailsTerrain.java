@@ -17,11 +17,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -230,6 +241,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
     protected void onActivityResult(int activite, int resultat, Intent donnees)
     {
+        super.onActivityResult(activite,resultat,donnees);
         switch(activite)
         {
             case ACTIVITE_AJOUTER_EVENEMENT:
@@ -241,16 +253,31 @@ public class DetailsTerrain extends AppCompatActivity {
                 break;
 
             case APPAREIL_PHOTO:
-                Bitmap bit = (Bitmap) donnees.getExtras().get("donnees");
+                if(resultat == RESULT_OK){
 
+                    Bitmap bit = (Bitmap) donnees.getExtras().get("data");
+
+                    String nomfichier = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+
+                    new TransfererImage(bit, nomfichier).execute();
+                }
+                break;
         }
     }
+
+    private HttpParams getParametresRequeteHttp(){
+        HttpParams parametresRequeteHttp = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(parametresRequeteHttp, 1000 * 30);
+        HttpConnectionParams.setSoTimeout(parametresRequeteHttp, 1000 * 30);
+        return parametresRequeteHttp;
+    }
+
 
     private class TransfererImage extends AsyncTask<Void,Void,Void> {
 
         Bitmap image;
         String nom;
-        String URLServer = "";
+        String URLServeur = "http://158.69.192.249/sportswhere/image/ajouter.php";
         public TransfererImage(Bitmap image, String nom){
             this.image = image;
             this.nom = nom;
@@ -266,10 +293,10 @@ public class DetailsTerrain extends AppCompatActivity {
             fichierAEnvoyer.add(new BasicNameValuePair("image", imageEncodee));
             fichierAEnvoyer.add (new BasicNameValuePair("nom", nom));
 
-            HttpParams httpRequestParams = getHttpRequestParams();
+            HttpParams parametresRequeteHttp = getParametresRequeteHttp();
 
-            HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(URLServer);
+            HttpClient client = new DefaultHttpClient(parametresRequeteHttp);
+            HttpPost post = new HttpPost(URLServeur);
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(fichierAEnvoyer));
@@ -277,12 +304,12 @@ public class DetailsTerrain extends AppCompatActivity {
             }catch(Exception e){
                 e.printStackTrace();
             }
-
             return null;
         }
 
         protected void onPostExecute(Void aVoid){
             super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(), "Image téléchargée", Toast.LENGTH_SHORT).show();
         }
 
     }
