@@ -97,10 +97,10 @@ public class EvenementDAO {
         return listeEvenementsPourAdaptateur;
     }
 
-    public List<HashMap<String,String>> recupererListeEvenementsPourAdapteur(int id_terrain) {
+    public List<HashMap<String,String>> recupererListeEvenementsPourAdapteur(int idTerrain) {
         List<HashMap<String, String>> listeEvenementsPourAdaptateur = new ArrayList<HashMap<String, String>>();
         for(Evenement evenement : listeEvenements){
-            if(evenement.getTerrain() == id_terrain) listeEvenementsPourAdaptateur.add(evenement.obtenirEvenementPourAdapteur());
+            if(evenement.getTerrain() == idTerrain) listeEvenementsPourAdaptateur.add(evenement.obtenirEvenementPourAdapteur());
         }
         return listeEvenementsPourAdaptateur;
     }

@@ -127,7 +127,7 @@ public class Accueil extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 intentionNaviguerDetailsTerrain = new Intent(Accueil.this, DetailsTerrain.class);
-                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+accesseurTerrain.trouverTerrain(marker.getTitle()).getId_terrain());
+                intentionNaviguerDetailsTerrain.putExtra("idTerrain", ""+accesseurTerrain.trouverTerrain(marker.getTitle()).getIdTerrain());
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
         });

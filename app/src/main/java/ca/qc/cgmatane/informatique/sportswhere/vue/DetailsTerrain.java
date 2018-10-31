@@ -55,7 +55,7 @@ public class DetailsTerrain extends AppCompatActivity {
         vueListeEvenements = findViewById(R.id.vue_liste_evenements);
 
         Bundle parametres = this.getIntent().getExtras();
-        String parametreIdTerrain = (String) parametres.get("id_terrain");
+        String parametreIdTerrain = (String) parametres.get("idTerrain");
         int idTerrain = Integer.parseInt(parametreIdTerrain);
         nombreTerrains = accesseurTerrain.getNombreTerrains();
         terrain = accesseurTerrain.trouverTerrain(idTerrain);
@@ -69,7 +69,7 @@ public class DetailsTerrain extends AppCompatActivity {
         actionNaviguerAjouterEvenement.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View arg0) {
-                        intentionNaviguerAjouterEvenement.putExtra("terrain", terrain.getId_terrain());
+                        intentionNaviguerAjouterEvenement.putExtra("terrain", terrain.getIdTerrain());
                         startActivityForResult(intentionNaviguerAjouterEvenement, ACTIVITE_AJOUTER_EVENEMENT);
                     }
                 }
@@ -120,13 +120,13 @@ public class DetailsTerrain extends AppCompatActivity {
 
                 Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
 
-                int idTerrain = terrain.getId_terrain()+1;
+                int idTerrain = terrain.getIdTerrain()+1;
 
                 if(idTerrain>nombreTerrains-1){
                     idTerrain = 0;
                 }
 
-                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
+                intentionNaviguerDetailsTerrain.putExtra("idTerrain", ""+idTerrain);
 
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
@@ -134,13 +134,13 @@ public class DetailsTerrain extends AppCompatActivity {
 
                 Intent intentionNaviguerDetailsTerrain = new Intent (DetailsTerrain.this, DetailsTerrain.class);
 
-                int idTerrain = terrain.getId_terrain()-1;
+                int idTerrain = terrain.getIdTerrain()-1;
 
                 if(idTerrain<0){
                     idTerrain = nombreTerrains-1;
                 }
 
-                intentionNaviguerDetailsTerrain.putExtra("id_terrain", ""+idTerrain);
+                intentionNaviguerDetailsTerrain.putExtra("idTerrain", ""+idTerrain);
 
                 startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
             }
@@ -194,7 +194,7 @@ public class DetailsTerrain extends AppCompatActivity {
     }
 
     private void afficherTousLesEvenements(){
-        listeEvenementsPourAdapteur = accesseurEvenement.recupererListeEvenementsPourAdapteur(terrain.getId_terrain());
+        listeEvenementsPourAdapteur = accesseurEvenement.recupererListeEvenementsPourAdapteur(terrain.getIdTerrain());
 
         SimpleAdapter adapteur = new SimpleAdapter(
                 this,

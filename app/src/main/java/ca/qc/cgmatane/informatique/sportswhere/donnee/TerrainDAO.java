@@ -90,7 +90,7 @@ public class TerrainDAO {
 
     public Terrain trouverTerrain(int idTerrain){
         for(Terrain terrain: this.listeTerrains){
-            if(terrain.getId_terrain() == idTerrain) return terrain;
+            if(terrain.getIdTerrain() == idTerrain) return terrain;
         }
         return null;
     }

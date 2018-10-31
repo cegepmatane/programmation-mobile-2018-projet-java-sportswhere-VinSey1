@@ -92,7 +92,7 @@ public class AjouterEvenement extends AppCompatActivity {
                 Evenement evenement = new Evenement(date.getTime(),
                         champNom.getText().toString(),
                         champDescription.getText().toString(),
-                        terrain.getId_terrain());
+                        terrain.getIdTerrain());
                 accesseurEvenement.ajouterEvenement(evenement);
                 naviguerRetourDetailsTerrain();
             }

@@ -81,7 +81,7 @@ public class ListeTerrains extends AppCompatActivity {
 
                     Intent intentionNaviguerDetailsTerrain = new Intent (ListeTerrains.this, DetailsTerrain.class);
 
-                    intentionNaviguerDetailsTerrain.putExtra("id_terrain", terrain.get("id_terrain"));
+                    intentionNaviguerDetailsTerrain.putExtra("idTerrain", terrain.get("idTerrain"));
 
                     startActivityForResult(intentionNaviguerDetailsTerrain, ACTIVITE_DETAILS_TERRAIN);
                 }
