@@ -8,7 +8,7 @@
     tools:context=".vue.DetailsTerrain">
 
     <ImageView
-        android:id="@+id/image_terrain"
+        android:id="@+id/image_titre"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginBottom="8dp"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/action_naviguer_ajouter_evenement" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_terrain"
         android:layout_width="306dp"
         android:layout_height="198dp"
         android:layout_marginStart="10dp"
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/image_terrain"
         app:layout_constraintVertical_bias="0.51"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
@@ -137,9 +137,9 @@
         android:layout_height="39dp"
         android:layout_marginTop="160dp"
         android:text="+"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/image_terrain"
+        app:layout_constraintEnd_toEndOf="@+id/image_terrain"
+        app:layout_constraintTop_toTopOf="@+id/image_terrain"
         app:layout_constraintVertical_bias="1.0" />
 
 
