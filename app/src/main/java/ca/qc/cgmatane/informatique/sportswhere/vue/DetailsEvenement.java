@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import ca.qc.cgmatane.informatique.sportswhere.R;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.EvenementDAO;
+import ca.qc.cgmatane.informatique.sportswhere.donnee.Interet;
+import ca.qc.cgmatane.informatique.sportswhere.donnee.InteretDAO;
 import ca.qc.cgmatane.informatique.sportswhere.donnee.TerrainDAO;
 import ca.qc.cgmatane.informatique.sportswhere.modele.Evenement;
 import ca.qc.cgmatane.informatique.sportswhere.modele.Terrain;
@@ -28,6 +31,7 @@ public class DetailsEvenement extends AppCompatActivity {
     private Terrain terrain;
     private Intent intentionNaviguerDetailsTerrain;
     private Intent intentionNaviguerAccueil;
+    private InteretDAO accesseurInteret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class DetailsEvenement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_details_evenement);
 
+        this.accesseurInteret = InteretDAO.getInstance(getApplicationContext());
         this.accesseurEvenement = EvenementDAO.getInstance();
         this.accesseurTerrain = TerrainDAO.getInstance();
 
@@ -73,14 +78,18 @@ public class DetailsEvenement extends AppCompatActivity {
         );
 
         final CheckBox estInteresse = findViewById( R.id.action_est_interesse );
+
+        estInteresse.setChecked(verifierInteretCoche());
+
         estInteresse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean estCoche){
                 if(estCoche){
                     long dateAlarme = evenement.getDate();
                     evenement.ajouterAlarme(DetailsEvenement.this, dateAlarme);
+                    enregistrerInteret(true);
                 } else{
-
+                    enregistrerInteret(false);
                 }
             }
         });
@@ -139,4 +148,33 @@ public class DetailsEvenement extends AppCompatActivity {
         this.finish();
     };
 
+    private void enregistrerInteret(boolean coche){
+        Interet nouveauInteret = new Interet(evenement.getIdEvenement(), coche);
+        Log.d("Test nouveauInteret ", ""+nouveauInteret.isCoche());
+        if (!verifierInteret()) {
+            accesseurInteret.ajouterInteret(nouveauInteret);
+        }
+        else {
+            accesseurInteret.modifierInteret(nouveauInteret);
+        }
+    }
+
+    private boolean verifierInteretCoche() {
+        Interet interet = accesseurInteret.chercherInteret(evenement.getIdEvenement());
+        if (interet == null) {
+            return false;
+        }
+        else {
+            return interet.isCoche();
+        }
+    }
+
+    private boolean verifierInteret() {
+        if (accesseurInteret.chercherInteret(evenement.getIdEvenement()) == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
