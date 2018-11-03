@@ -87,8 +87,8 @@ public class Evenement extends AppCompatActivity {
     Activity activite;
     public void ajouterAlarme(Context context, long dateAlarme){
         Intent intententionLancerAlarme = new Intent(context, Alarme.class);
-        intententionLancerAlarme.putExtra("nom", this.getNom());
-        intententionLancerAlarme.putExtra("description", this.getDescription());
+        intententionLancerAlarme.putExtra("nom", nom);
+        intententionLancerAlarme.putExtra("description", description);
         intententionLancerAlarme.putExtra("tempsAlarme", dateAlarme);
         activite = (Activity) context;
 
