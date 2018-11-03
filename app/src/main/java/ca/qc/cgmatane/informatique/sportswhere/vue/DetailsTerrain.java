@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -144,6 +145,8 @@ public class DetailsTerrain extends AppCompatActivity {
 
         titre.setText(terrain.getTitre());
 
+        gestionnaireTailleListe(vueListeEvenements);
+        
         vueListeEvenements.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
 
@@ -387,4 +390,28 @@ public class DetailsTerrain extends AppCompatActivity {
         }
     }
     */
+
+    /* Méthode pour régler le problème de hauteur de la liste
+    Source : https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view */
+    private static void gestionnaireTailleListe(ListView listView) {
+        ListAdapter adapteurListe = listView.getAdapter();
+        if (adapteurListe == null){
+            return;
+        }
+
+        int largeur = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int hauteurTotale = 0;
+        View vue = null;
+        for (int i = 0; i < adapteurListe.getCount(); i++) {
+            vue = adapteurListe.getView(i, vue, listView);
+            if (i == 0){
+                vue.setLayoutParams(new ViewGroup.LayoutParams(largeur, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+            vue.measure(largeur, View.MeasureSpec.UNSPECIFIED);
+            hauteurTotale += vue.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams parametres = listView.getLayoutParams();
+        parametres.height = hauteurTotale + (listView.getDividerHeight() * (adapteurListe.getCount() - 1));
+        listView.setLayoutParams(parametres);
+    }
 }

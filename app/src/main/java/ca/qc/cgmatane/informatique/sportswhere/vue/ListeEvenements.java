@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -66,6 +69,8 @@ public class ListeEvenements extends AppCompatActivity {
                 }
         );
 
+        gestionnaireTailleListe(vueListeEvenements);
+
         vueListeEvenements.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
 
@@ -110,5 +115,29 @@ public class ListeEvenements extends AppCompatActivity {
                 afficherTousLesEvenements();
                 break;
         }
+    }
+
+    /* Méthode pour régler le problème de hauteur de la liste
+        Source : https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view */
+    private static void gestionnaireTailleListe(ListView listView) {
+        ListAdapter adapteurListe = listView.getAdapter();
+        if (adapteurListe == null){
+            return;
+        }
+
+        int largeur = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int hauteurTotale = 0;
+        View vue = null;
+        for (int i = 0; i < adapteurListe.getCount(); i++) {
+            vue = adapteurListe.getView(i, vue, listView);
+            if (i == 0){
+                vue.setLayoutParams(new ViewGroup.LayoutParams(largeur, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+            vue.measure(largeur, View.MeasureSpec.UNSPECIFIED);
+            hauteurTotale += vue.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams parametres = listView.getLayoutParams();
+        parametres.height = hauteurTotale + (listView.getDividerHeight() * (adapteurListe.getCount() - 1));
+        listView.setLayoutParams(parametres);
     }
 }
