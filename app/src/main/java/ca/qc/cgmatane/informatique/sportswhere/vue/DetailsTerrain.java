@@ -75,6 +75,7 @@ public class DetailsTerrain extends AppCompatActivity {
     private ImageView imageTerrain;
     private View vue;
     private String imageURL;
+    private SimpleAdapter adapteur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,7 @@ public class DetailsTerrain extends AppCompatActivity {
         titre.setText(terrain.getTitre());
 
         gestionnaireTailleListe(vueListeEvenements);
-        
+
         vueListeEvenements.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
 
@@ -207,7 +208,6 @@ public class DetailsTerrain extends AppCompatActivity {
         vueImage = findViewById(R.id.image_terrain);
         detecteur = new ScaleGestureDetector(this,new EcouteEchelle());
 
-
     }
 
     public boolean onTouchEvent(MotionEvent evenement) {
@@ -252,7 +252,7 @@ public class DetailsTerrain extends AppCompatActivity {
     private void afficherTousLesEvenements(){
         listeEvenementsPourAdapteur = accesseurEvenement.recupererListeEvenementsPourAdapteur(terrain.getIdTerrain());
 
-        SimpleAdapter adapteur = new SimpleAdapter(
+        adapteur = new SimpleAdapter(
                 this,
                 listeEvenementsPourAdapteur,
                 android.R.layout.two_line_list_item,
@@ -268,10 +268,7 @@ public class DetailsTerrain extends AppCompatActivity {
         switch(activite)
         {
             case ACTIVITE_AJOUTER_EVENEMENT:
-                afficherTousLesEvenements();
-                break;
-
-            case ACTIVITE_DETAILS_EVENEMENT:
+                vueListeEvenements.invalidateViews();
                 afficherTousLesEvenements();
                 break;
 
@@ -335,7 +332,6 @@ public class DetailsTerrain extends AppCompatActivity {
             super.onPostExecute(aVoid);
             Toast.makeText(getApplicationContext(), "Image changée", Toast.LENGTH_SHORT).show();
             mettreImageTerrain();
-            //mettreImageTerrain();
             //getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
         }
 
@@ -343,7 +339,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
     protected void mettreImageTerrain(){
         Picasso.get().invalidate(imageURL);
-        Picasso.get().load(imageURL).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE);
+        Picasso.get().load(imageURL).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageTerrain);
         /*
         try {
             URL lien = new URL("http://158.69.192.249/sportswhere/image/stockage/Terrain-"+terrain.getIdTerrain());

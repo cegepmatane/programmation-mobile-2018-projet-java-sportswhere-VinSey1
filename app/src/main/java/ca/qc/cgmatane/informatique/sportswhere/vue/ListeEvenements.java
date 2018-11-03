@@ -30,6 +30,7 @@ public class ListeEvenements extends AppCompatActivity {
     protected ListView vueListeEvenements;
     private Intent intentionNaviguerListeTerrains;
     private Intent intentionNaviguerAccueil;
+    private SimpleAdapter adapteur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class ListeEvenements extends AppCompatActivity {
     private void afficherTousLesEvenements(){
         listeEvenementsPourAdapteur = accesseurEvenement.recupererListeEvenementsPourAdapteur();
 
-        SimpleAdapter adapteur = new SimpleAdapter(
+        adapteur = new SimpleAdapter(
                 this,
                 listeEvenementsPourAdapteur,
                 android.R.layout.two_line_list_item,
@@ -112,7 +113,10 @@ public class ListeEvenements extends AppCompatActivity {
         switch(activite)
         {
             case ACTIVITE_DETAILS_EVENEMENT:
-                afficherTousLesEvenements();
+                adapteur.notifyDataSetChanged();
+                break;
+            default:
+                adapteur.notifyDataSetChanged();
                 break;
         }
     }

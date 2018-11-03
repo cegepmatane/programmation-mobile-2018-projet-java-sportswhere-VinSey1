@@ -79,7 +79,7 @@ public class DetailsEvenement extends AppCompatActivity {
 
         final CheckBox estInteresse = findViewById( R.id.action_est_interesse );
 
-        estInteresse.setChecked(verifierInteretCoche());
+        estInteresse.setChecked(false);
 
         estInteresse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
