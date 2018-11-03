@@ -2,15 +2,19 @@ package ca.qc.cgmatane.informatique.sportswhere.vue;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +22,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -30,9 +38,12 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +71,9 @@ public class DetailsTerrain extends AppCompatActivity {
     private ScaleGestureDetector detecteur;
     private float echelle = 1f;
     private final static int APPAREIL_PHOTO = 7;
+    private ImageView imageTerrain;
+    private View vue;
+    private String imageURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +82,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_details_terrain);
+
 
         Button prendrePhoto = findViewById(R.id.action_modifier_image);
 
@@ -92,6 +107,11 @@ public class DetailsTerrain extends AppCompatActivity {
         int idTerrain = Integer.parseInt(parametreIdTerrain);
         nombreTerrains = accesseurTerrain.getNombreTerrains();
         terrain = accesseurTerrain.trouverTerrain(idTerrain);
+
+        imageTerrain = findViewById(R.id.image_terrain);
+
+        imageURL = "http://158.69.192.249/sportswhere/image/stockage/Terrain-"+terrain.getIdTerrain()+".jpg";
+        Picasso.get().load(imageURL).into(imageTerrain);
 
         afficherTousLesEvenements();
 
@@ -146,7 +166,7 @@ public class DetailsTerrain extends AppCompatActivity {
                 }
         );
 
-        View vue = findViewById(R.id.fenetre_details_terrain);
+        vue = findViewById(R.id.fenetre_details_terrain);
         vue.setOnTouchListener(new EcouteurSurBalayement(DetailsTerrain.this) {
             public void balayageHaut() {}
             public void balayageGauche() {
@@ -181,7 +201,7 @@ public class DetailsTerrain extends AppCompatActivity {
 
         });
 
-        vueImage = findViewById(R.id.imageView);
+        vueImage = findViewById(R.id.image_terrain);
         detecteur = new ScaleGestureDetector(this,new EcouteEchelle());
 
 
@@ -257,10 +277,11 @@ public class DetailsTerrain extends AppCompatActivity {
 
                     Bitmap bit = (Bitmap) donnees.getExtras().get("data");
 
-                    String nomfichier = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                    String nomfichier = "Terrain-"+terrain.getIdTerrain();
 
                     new TransfererImage(bit, nomfichier).execute();
-                }
+
+                    }
                 break;
         }
     }
@@ -309,8 +330,61 @@ public class DetailsTerrain extends AppCompatActivity {
 
         protected void onPostExecute(Void aVoid){
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(), "Image téléchargée", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Image changée", Toast.LENGTH_SHORT).show();
+            mettreImageTerrain();
+            //mettreImageTerrain();
+            //getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
         }
 
     }
+
+    protected void mettreImageTerrain(){
+        Picasso.get().invalidate(imageURL);
+        Picasso.get().load(imageURL).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE);
+        /*
+        try {
+            URL lien = new URL("http://158.69.192.249/sportswhere/image/stockage/Terrain-"+terrain.getIdTerrain());
+            HttpURLConnection connexion = (HttpURLConnection) lien.openConnection();
+            connexion.setDoInput(true);
+            connexion.connect();
+            InputStream input = connexion.getInputStream();
+            Bitmap photoBitMap = BitmapFactory.decodeStream(input);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            photoBitMap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            imageTerrain.setImageBitmap(photoBitMap);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    /*
+    private class mettreImageTerrain extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                URL lien = new URL("http://158.69.192.249/sportswhere/image/stockage/Terrain-"+terrain.getIdTerrain());
+                HttpURLConnection connexion = (HttpURLConnection) lien.openConnection();
+                connexion.setDoInput(true);
+                connexion.connect();
+                InputStream input = connexion.getInputStream();
+                Bitmap photoBitMap = BitmapFactory.decodeStream(input);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                photoBitMap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                imageTerrain.setImageBitmap(photoBitMap);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return  null;
+        }
+
+        protected void onPostExecute(Void aVoid){
+            super.onPostExecute(aVoid);
+        }
+    }
+    */
 }
