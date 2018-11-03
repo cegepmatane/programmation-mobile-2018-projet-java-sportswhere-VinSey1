@@ -35,6 +35,8 @@ public class Alarme extends AppCompatActivity {
 
         gestionnaireAlarme.set(AlarmManager.RTC_WAKEUP, tempsAlarme, attenteIntentionLancerAlarme);
 
+        gestionnaireAlarme.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+1000, attenteIntentionLancerAlarme);
+
         Toast.makeText(this, "Alarme prévue pour le " + new SimpleDateFormat("dd/MM/yyyy").format(tempsAlarme),Toast.LENGTH_LONG).show();
         this.finish();
     }
